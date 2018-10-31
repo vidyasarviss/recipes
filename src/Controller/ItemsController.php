@@ -71,11 +71,8 @@ class ItemsController extends AppController
             $this->Flash->error(__('The item could not be saved. Please, try again.'));
         }else if($this->request->is('get')){            
             $this->Units = TableRegistry::get('Units');
-            $this->set(
-                'units',
-                $this->Units->find('list')
-                );
-        }
+            $this->set('units',$this->Units->find('list'));
+           }
         $this->set(compact('item'));
     }
 

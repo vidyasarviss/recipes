@@ -59,7 +59,7 @@ class RecipesController extends AppController
                 $ingredient->recipe_id=$recipe->id;
                 $ingredient->item_id= $this->request->getData()["item_id"];
                 $ingredient->quantity= $this->request->getData()["quantity"];
-                $ingredient->recipe_id= $this->request->getData()["recipe_id"];
+               
                 $ingredient->unit_id= $this->request->getData()["unit_id"];
                 $ing->save($ingredient);
                 
@@ -68,6 +68,8 @@ class RecipesController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
+            
+              debug($recipe->errors());die();
             $this->Flash->error(__('The recipe could not be saved. Please, try again.'));
         }else if($this->request->is('get')){
             $units = TableRegistry::get('Units');
@@ -78,12 +80,16 @@ class RecipesController extends AppController
             
             $items = TableRegistry::get('Items');
             $this->set('items',$items->find('list'));
+            
+            $category= TableRegistry::get('Categories');
+            $this->set('category',$category->find('list'));
             foreach ($items as $item)
             {
                 $item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
                 
             }
         }
+       
         $this->set(compact('recipe'));
     }
 
@@ -97,7 +103,7 @@ class RecipesController extends AppController
     public function edit($id = null)
     {
         $recipe = $this->Recipes->get($id, [
-            'contain' => []
+            'contain' => ['ingredients']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $recipe = $this->Recipes->patchEntity($recipe, $this->request->getData());
@@ -107,6 +113,24 @@ class RecipesController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The recipe could not be saved. Please, try again.'));
+        }
+        else if($this->request->is('get')){
+            $units = TableRegistry::get('Units');
+            $this->set('units',$units->find('list'));
+            
+            $recipes = TableRegistry::get('Recipes');
+            $this->set('recipes',$recipes->find('list'));
+            
+            $items = TableRegistry::get('Items');
+            $this->set('items',$items->find('list'));
+            
+            $category= TableRegistry::get('Categories');
+            $this->set('category',$category->find('list'));
+            foreach ($items as $item)
+            {
+                $item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+                
+            }
         }
         $this->set(compact('recipe'));
     }

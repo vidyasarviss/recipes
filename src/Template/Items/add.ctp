@@ -18,38 +18,14 @@
         <legend><?= __('Add Item') ?></legend>
         <?php
             echo $this->Form->control('item_name');
-	    echo $this->Form->input(
-		    'purchase_unit', 
-		    [
-			'type' => 'select',
-			'multiple' => false,
-			'options' => $units, 
-			'empty' => true
-		    ]
-	    );
-	    
-	    echo $this->Form->input(
-		    'sell_unit', 
-		    [
-			'type' => 'select',
-			'multiple' => false,
-			'options' => $units, 
-			'empty' => true
-		    ]
-	    );
-	    
-	    echo $this->Form->input(
-		    'usage_unit', 
-		    [
-			'type' => 'select',
-			'multiple' => false,
-			'options' => $units, 
-			'empty' => true
-		    ]
-	    );	    
-           
-           
-        ?>
+	        echo $this->Form->input('purchase_unit',array('type'=>'select','options'=>$units));
+	        echo $this->Form->input('sell_unit_qty');
+	        echo $this->Form->input('sell_unit',array('type'=>'select','options'=>$units));
+	        echo $this->Form->input('usage_unit_qty');	        
+	        echo $this->Form->input('usage_unit',array('type'=>'select','options'=>$units));
+	       
+	        
+	       ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
