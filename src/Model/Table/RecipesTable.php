@@ -79,8 +79,8 @@ class RecipesTable extends Table
 public function beforeSave($event, $entity, $options)
 {
             $recipes_table = TableRegistry::get('Recipes'); 
-            $items=$recipes_table->find('list')->where(['recipes_name'=>$entity->recipes_name])->count();
-            if($items > 0)
+            $recipe=$recipes_table->find('list')->where(['recipes_name'=>$entity->recipes_name])->count();
+            if($recipe > 0)
             {
             return false;
             }
