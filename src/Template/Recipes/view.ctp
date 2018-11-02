@@ -43,22 +43,15 @@
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Item Id') ?></th>
                 <th scope="col"><?= __('Quantity') ?></th>
-                <th scope="col"><?= __('Recipe Id') ?></th>
                 <th scope="col"><?= __('Unit Id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($recipe->ingredients as $ingredients): ?>
+            <?php foreach ($recipe->ingredients as $ingredient): ?>
             <tr>
-                <td><?= h($ingredients->id) ?></td>
-                <td><?= h($ingredients->item_id) ?></td>
-                <td><?= h($ingredients->quantity) ?></td>
-                <td><?= h($ingredients->recipe_id) ?></td>
-                <td><?= h($ingredients->unit_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Ingredients', 'action' => 'view', $ingredients->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Ingredients', 'action' => 'edit', $ingredients->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Ingredients', 'action' => 'delete', $ingredients->id], ['confirm' => __('Are you sure you want to delete # {0}?', $ingredients->id)]) ?>
-                </td>
+                <td><?= h($ingredient->id) ?></td>
+                <td><?= h($ingredient->item_name) ?></td>
+                <td><?= h($ingredient->quantity) ?></td>
+                <td><?= h($ingredient->unit_name) ?></td>
+
             </tr>
             <?php endforeach; ?>
         </table>

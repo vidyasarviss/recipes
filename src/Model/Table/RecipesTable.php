@@ -5,6 +5,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
+use Cake\ORM\TableRegistry;
 
 /**
  * Recipes Model
@@ -73,4 +75,14 @@ class RecipesTable extends Table
 
         return $validator;
     }
+
+public function beforeSave($event, $entity, $options)
+{
+            $recipes_table = TableRegistry::get('Recipes'); 
+            $items=$recipes_table->find('list')->where(['recipes_name'=>$entity->recipes_name])->count();
+            if($items > 0)
+            {
+            return false;
+            }
+} 
 }

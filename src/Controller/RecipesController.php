@@ -24,6 +24,8 @@ class RecipesController extends AppController
     {
         $recipes = $this->paginate($this->Recipes);
         
+        
+        
         $this->set(compact('recipes'));
     }
 
@@ -39,7 +41,21 @@ class RecipesController extends AppController
         $recipe = $this->Recipes->get($id, [
             'contain' => ['Ingredients']
         ]);
+                
+        foreach($recipe->ingredients as $ingredient)
+        {        
+        	$items = TableRegistry::get('Items');      
+	    	$ingredient->recipe_id=$recipe->id;
+        	$ingredient->item_name = $items->get($ingredient->item_id)->item_name;
+        	
+             $units= TableRegistry::get('Units');
+        	 $ingredient->recipe_id=$recipe->id;
+			$ingredient->unit_name=$units->get($ingredient->unit_id)->name;        
+        }
+        
+        
 
+		//debug($recipe);die();
         $this->set('recipe', $recipe);
     }
 
@@ -50,26 +66,43 @@ class RecipesController extends AppController
      */
     public function add()
     {
+        $data = $this->request->getData();
+    	
         $recipe = $this->Recipes->newEntity();
         if ($this->request->is('post')) {
-            $recipe = $this->Recipes->patchEntity($recipe, $this->request->getData());
+            $recipe = $this->Recipes->patchEntity($recipe, $data);
             if ($this->Recipes->save($recipe)) {
-                $ing=TableRegistry::get('Ingredients');
-                $ingredient=$ing->newEntity();
-                $ingredient->recipe_id=$recipe->id;
-                $ingredient->item_id= $this->request->getData()["item_id"];
-                $ingredient->quantity= $this->request->getData()["quantity"];
-               
-                $ingredient->unit_id= $this->request->getData()["unit_id"];
-                $ing->save($ingredient);
-                
-                
+                $ing=TableRegistry::get('Ingredients'); 
+                $i = 0;                             
+                foreach($data['items'] as $item)
+                {
+	                $ingredient=$ing->newEntity();
+	                $ingredient->recipe_id=$recipe->id;
+                    $ingredient->item_id= $item;
+	                $ingredient->quantity= $data['qty'][$i];
+	                $ingredient->unit_id= $data['units'][$i];	 
+	                $ing->save($ingredient);           	                        	
+	         	}	              	                  
+	            $i++;
+			            
                 $this->Flash->success(__('The recipe has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             
-              debug($recipe->errors());die();
+             //debug($recipe->errors());die();
+            $units = TableRegistry::get('Units');
+            $this->set('units',$units->find('list'));
+            
+            $recipes = TableRegistry::get('Recipes');
+            $this->set('recipes',$recipes->find('list'));
+            
+            $items = TableRegistry::get('Items');
+            $this->set('items',$items->find('list'));
+            
+            $category= TableRegistry::get('Categories');
+            $this->set('category',$category->find('list'));
+            
             $this->Flash->error(__('The recipe could not be saved. Please, try again.'));
         }else if($this->request->is('get')){
             $units = TableRegistry::get('Units');
@@ -106,8 +139,24 @@ class RecipesController extends AppController
             'contain' => ['ingredients']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+        $data = $this->request->getData();
+        //debug($data);die();
+        //debug($this->request->getData();die();
             $recipe = $this->Recipes->patchEntity($recipe, $this->request->getData());
             if ($this->Recipes->save($recipe)) {
+            	$ing=TableRegistry::get('Ingredients');
+                $items=TableRegistry::get('Items'); 
+                $i = 0;                             
+                foreach($data['items'] as $item)
+                {                	
+                	$ingredient_id=$ing->find('list')->where(['item_id'=>$item,'recipe_id'=>$id])->first();
+                	$ingredient = $ing->get($ingredient_id);
+                	$ingredient->quantity=$data['qty'][$i];
+                	$ingredient->unit_id= $data['units'][$i];	
+                	$ing->save($ingredient); 
+                    $i++;          
+               } 
+              
                 $this->Flash->success(__('The recipe has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
@@ -126,6 +175,9 @@ class RecipesController extends AppController
             
             $category= TableRegistry::get('Categories');
             $this->set('category',$category->find('list'));
+            
+           $ingredients= TableRegistry::get('Ingredients');
+            $this->set('ingredients',$ingredients->find('list'));
             foreach ($items as $item)
             {
                 $item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);

@@ -19,36 +19,36 @@
             echo $this->Form->control('category',array('type'=>'select','options'=>$category)); 
             echo $this->Form->control('preparation_method');
         ?>
+        
+        
        
     </fieldset>
     
     <table id="recipeTable">
     <tr>
      
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items)); ?></td>
-    <td><?php echo $this->Form->control('quantity');; ?></td>
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units)); ?></td>
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]')); ?></td>
+    <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td>
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
     </tr>
-    
-    
-    <input type="button" onclick="add_row()" value="Add row">  
-     
-    
+    <input type="button" onclick="myFunction()" value="Add row">  
     </table>
-    <script>
-     function add_row()
-	{
-	var item=document.getElementById('recipeTable').add_row(0);
-	var quantity = item.AddCell(0);
-	var unit = item.AddCell(1);
-	quantity.innerHTML="New Cell1";
-	unit.innerHTML="New Cell2";
-	}
-	</script>
-    
-  
-    
     
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
+
+
+    <script>
+ 	function myFunction() {
+    var table = document.getElementById("recipeTable");
+    var row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var row = table.insertRow(0).innerHTML = '<tr> \
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]')); ?></td> \
+    <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td> \
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td> \
+    </tr>';
+    }
+    </script>

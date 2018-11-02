@@ -14,8 +14,6 @@
             )
         ?></li>
         <li><?= $this->Html->link(__('List Recipes'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Ingredients'), ['controller' => 'Ingredients', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Ingredient'), ['controller' => 'Ingredients', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="recipes form large-9 medium-8 columns content">
@@ -26,6 +24,8 @@
             echo $this->Form->control('recipes_name');
             echo $this->Form->control('category',array('type'=>'select','options'=>$category));
             echo $this->Form->control('preparation_method');
+            
+            
         ?>
     </fieldset>
     <table>
@@ -34,9 +34,9 @@
     {
     ?>
     <tr>
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id)); ?></td>
-    <td><?php echo $this->Form->control('quantity', array('default'=>$ingredient->quantity));; ?></td>
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->item_id)); ?></td>
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]')); ?></td>
+    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]'));; ?></td>
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->item_id, 'name'=>'units[]')); ?></td>
     </tr>
     <?php
     }

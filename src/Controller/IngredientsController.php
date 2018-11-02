@@ -57,9 +57,10 @@ class IngredientsController extends AppController
         $ingredient = $this->Ingredients->newEntity();
         if ($this->request->is('post')) {
             $ingredient = $this->Ingredients->patchEntity($ingredient, $this->request->getData());
+             debug($this->Ingredients->save($ingredient));die();
             if ($this->Ingredients->save($ingredient)) {
                 $this->Flash->success(__('The ingredient has been saved.'));
-
+               
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The ingredient could not be saved. Please, try again.'));
@@ -91,6 +92,8 @@ class IngredientsController extends AppController
             }
             $this->Flash->error(__('The ingredient could not be saved. Please, try again.'));
         }
+        
+        
         $items = $this->Ingredients->Items->find('list', ['limit' => 200]);
         $recipes = $this->Ingredients->Recipes->find('list', ['limit' => 200]);
         $units = $this->Ingredients->Units->find('list', ['limit' => 200]);

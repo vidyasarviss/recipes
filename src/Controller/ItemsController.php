@@ -48,7 +48,22 @@ class ItemsController extends AppController
     {
         $item = $this->Items->get($id, [
             'contain' => ['Ingredients']
-        ]);
+        ]);   
+             
+        foreach($item->ingredients as $ingredient)
+        {        
+        	                 
+        	
+            $items = TableRegistry::get('Items');      
+	    	$ingredient->item_id=$item->id;
+	    	$ingredient->item_name = $items->get($ingredient->item_id)->item_name;
+	    	
+	    	$units= TableRegistry::get('Units');      
+	    	$ingredient->item_id=$item->id;
+	    	$ingredient->unit_name=$units->get($ingredient->unit_id)->name;
+	    	
+	    	
+        }
 
         $this->set('item', $item);
     }

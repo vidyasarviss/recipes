@@ -4,8 +4,10 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Validation\Validator;
+use Cake\ORM\Rule\IsUnique;
 
+use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 /**
  * Items Model
  *
@@ -87,4 +89,15 @@ class ItemsTable extends Table
 
         return $validator;
     }
+
+public function beforeSave($event, $entity, $options)
+{
+            $items_table = TableRegistry::get('Items'); 
+            $items=$items_table->find('list')->where(['item_name'=>$entity->items_name])->count();
+            if($items > 0)
+            {
+            return false;
+            }
+} 
 }
+    
