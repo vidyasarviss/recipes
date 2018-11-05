@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Units Controller
@@ -23,6 +25,7 @@ class UnitsController extends AppController
         $units = $this->paginate($this->Units);
 
         $this->set(compact('units'));
+         
     }
 
     /**
@@ -37,6 +40,18 @@ class UnitsController extends AppController
         $unit = $this->Units->get($id, [
             'contain' => ['Ingredients']
         ]);
+        foreach($unit->ingredients as $ingredient)
+        {        
+        	                 
+        	
+            $items = TableRegistry::get('Items');      
+	    	$ingredient->unit_id=$unit->id;
+	    	$ingredient->item_name = $items->get($ingredient->item_id)->item_name;
+	    	
+	    	$units= TableRegistry::get('Units');      
+	    	$ingredient->unit_id=$unit->id;
+	    	$ingredient->unit_name=$units->get($ingredient->unit_id)->name;
+	   	}
 
         $this->set('unit', $unit);
     }
