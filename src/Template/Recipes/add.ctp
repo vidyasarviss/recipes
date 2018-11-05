@@ -26,12 +26,13 @@
     
     <table id="recipeTable">
     <tr>
-     
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]')); ?></td>
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onChange'=>'selectItems()')); ?></td>
     <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td>
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
     </tr>
-    <input type="button" onclick="myFunction()" value="Add row">  
+    <input type="button" onclick="myFunction()" value="Add row" > 
+    
+    
     </table>
     
     <?= $this->Form->button(__('Submit')) ?>
@@ -45,10 +46,21 @@
     var row = table.insertRow(0);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
+   
     var row = table.insertRow(0).innerHTML = '<tr> \
     <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]')); ?></td> \
     <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td> \
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td> \
     </tr>';
     }
-    </script>
+   function selectItems() 
+	{
+	console.log("bbb");
+	var item_name=document.getElementById('item-id');
+	var unit_name=document.getElementById('unit-id');
+	
+	console.log(unit_name);
+	
+	
+	}
+	</script>
