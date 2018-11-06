@@ -26,9 +26,9 @@
     
     <table id="recipeTable">
     <tr>
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onChange'=>'selectItems()')); ?></td>
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change()')); ?></td>
     <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td>
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]','onchange'=>'change()')); ?></td>
     </tr>
     <input type="button" onclick="myFunction()" value="Add row" > 
     
@@ -39,7 +39,8 @@
     <?= $this->Form->end() ?>
 </div>
 
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+  
     <script>
  	function myFunction() {
     var table = document.getElementById("recipeTable");
@@ -53,14 +54,31 @@
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td> \
     </tr>';
     }
-   function selectItems() 
+   function change() 
 	{
-	console.log("bbb");
-	var item_name=document.getElementById('item-id');
-	var unit_name=document.getElementById('unit-id');
+	//console.log("bbb");
+	var item_select_box=document.getElementById('item-id');
+	var unit_select_box=$('#unit-id');
 	
-	console.log(unit_name);
+	unit_select_box.empty();
+	
+	var myobject = {
+	ValueA : 'carton',
+	ValueB : 'kg',
+	ValueC : 'grams'
+	};
 	
 	
+		console.log(myobject);
+		
+		for(index in myobject)
+		{
+			console.log(index);
+		
+			unit_select_box.append("<option value=" + index + ">" + myobject[index] + "</option>");
+		}
 	}
+	
+	
+	
 	</script>
