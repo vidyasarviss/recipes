@@ -62,6 +62,31 @@
 	
 	unit_select_box.empty();
 	
+	$.ajax({
+		type: 'get',
+		url: '/recipes/getunits',
+		  data: { 
+		    itemid: item_select_box.value
+		  },
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		},
+		success: function(response) {
+			if (response.error) {
+				alert(response.error);
+				console.log(response.error);
+			}
+			if (response.content) {
+				$('#target').html(response.content);
+			}
+		},
+		error: function(e) {
+			//alert("An error occurred: " + e.responseText.message);
+			console.log(e);
+		}
+	});	
+	
+	
 	var myobject = {
 	ValueA : 'carton',
 	ValueB : 'kg',
