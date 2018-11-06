@@ -54,7 +54,7 @@
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td> \
     </tr>';
     }
-   function change() 
+  function change() 
 	{
 	//console.log("bbb");
 	var item_select_box=document.getElementById('item-id');
@@ -68,14 +68,13 @@
 	ValueC : 'grams'
 	};
 	
-	
-		console.log(myobject);
-		
-		for(index in myobject)
+	console.log(myobject);
+	for(index in myobject)
 		{
 			console.log(index);
 		
 			unit_select_box.append("<option value=" + index + ">" + myobject[index] + "</option>");
+			
 		}
 	}
 	

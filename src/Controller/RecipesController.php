@@ -124,6 +124,9 @@ class RecipesController extends AppController
             }
         }
        
+       
+       
+       
         $this->set(compact('recipe'));
     }
 
@@ -208,7 +211,13 @@ class RecipesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
      
+  public function item($id=null)
+  {
+    $items = TableRegistry::get('Items');
+    $item =$items->get($id);
+    $units = TableRegistry::get('Units');
+    $units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
      
-    
- 
+    return $units;
+ }
 }
