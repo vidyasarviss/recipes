@@ -28,7 +28,7 @@
     <tr>
     <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change()')); ?></td>
     <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td>
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]','onchange'=>'change()')); ?></td>
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
     </tr>
     <input type="button" onclick="myFunction()" value="Add row" > 
     
@@ -58,6 +58,7 @@
 	{
 	//console.log("bbb");
 	var item_select_box=document.getElementById('item-id');
+	//console.log(unit-id);
 	var unit_select_box=$('#unit-id');
 	
 	unit_select_box.empty();
@@ -76,33 +77,15 @@
 				alert(response.error);
 				console.log(response.error);
 			}
-			if (response.content) {
-				$('#target').html(response.content);
+			if(response){
+			for(var k in response)
+			{
+			   $("#unit-id").append("<option value=' "+ k +" '>" +response[k]+ "</option>");
+				}
 			}
-		},
-		error: function(e) {
-			//alert("An error occurred: " + e.responseText.message);
-			console.log(e);
 		}
-	});	
-	
-	
-	var myobject = {
-	ValueA : 'carton',
-	ValueB : 'kg',
-	ValueC : 'grams'
-	};
-	
-	console.log(myobject);
-	for(index in myobject)
-		{
-			console.log(index);
 		
-			unit_select_box.append("<option value=" + index + ">" + myobject[index] + "</option>");
-			
-		}
+	});	
 	}
-	
-	
 	
 	</script>

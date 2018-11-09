@@ -213,20 +213,35 @@ class RecipesController extends AppController
      
   public function getunits()
   {
+    $this->RequestHandler->respondAs('json');
+    $this->response->type('application/json');
+    $this->autoRender = false ;      
       
-      $this->autoRender = false ;      
-      
-      $itemid = $this->request->query();
-    $items = TableRegistry::get('Items');
-    $item =$items->get($itemid['itemid']);
-    $units = TableRegistry::get('Units');
-    $units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
-     
+    $itemid = $this->request->query();
+    $items_table = TableRegistry::get('Items');
+    $item = $items_table ->get($itemid['itemid']);
+    $units_table = TableRegistry::get('Units');
+    
+   
+    //$units_table= $this->units->find('list',array('fields' => array('units_table'),'conditions' => array('units'=>$value)));
+    //foreach($units_length as $q)
+    //{
+        ///$units[]="<option>".$q."</option>";
+    //}
+    // print_r($units);
+   
+    $units=$units_table->find('list')->where(['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+    //debug($item->purchase_unit,$item->sell_unit,$item->usage_unit); die();
     //this gives template error, google "cakephp function response without template"
-//     $this->set(compact('units'));
     
-    //return json repsonse, something like json.encode();
+  //return json response
     
-    return  $units;
- }
+    $this->RequestHandler->renderAs($this, 'json');
+
+    $resultJ=json_encode($units);
+    $this->response->type('json');
+    $this->response->body($resultJ);
+    return $this->response;
+    
+  }
 }
