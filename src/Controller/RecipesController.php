@@ -115,7 +115,7 @@ class RecipesController extends AppController
             $items = TableRegistry::get('Items');
             $this->set('items',$items->find('list'));
             
-            $category= TableRegistry::get('Categories');
+            $category= TableRegistry::get('Categories'); $data = $this->request->getData();
             $this->set('category',$category->find('list'));
             foreach ($items as $item)
             {
@@ -139,11 +139,13 @@ class RecipesController extends AppController
      */
     public function edit($id = null)
     {
-        $recipe = $this->Recipes->get($id, [
-            'contain' => ['ingredients']
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
         $data = $this->request->getData();
+        $recipe = $this->Recipes->newEntity();
+       // $recipe = $this->Recipes->get($id, [
+           // 'contain' => ['ingredients']
+        // ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+       
         //debug($data);die();
         //debug($this->request->getData();die();
             $recipe = $this->Recipes->patchEntity($recipe, $this->request->getData());
@@ -210,7 +212,8 @@ class RecipesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-     
+    
+    
   public function getunits()
   {
     $this->RequestHandler->respondAs('json');
