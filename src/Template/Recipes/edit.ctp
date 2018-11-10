@@ -28,37 +28,46 @@
             
         ?>
     </fieldset>
-    
-    <table id="recipeTable">
+        <table id="recipeTable">
+    <?php
+    foreach($recipe->ingredients as $ingredient)
+    {
+    ?>
     <tr>
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change()')); ?></td>
-    <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td>
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','onchange'=>'change()')); ?></td>
+    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]'));; ?></td>
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->item_id, 'name'=>'units[]')); ?></td>
     </tr>
-    <input type="button" onclick="myFunction()" value="Add row" > 
     
-    
+    <?php
+    }
+    ?>
+    <input type="button" onclick="myFunction()" value="Add row" >
+    <input type="button" id="delrtbutton" value="Delete row" onclick="deleteRow(this)"> 
     </table>
-    
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
-  
-    <script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+ <script>
  	function myFunction() {
     var table = document.getElementById("recipeTable");
     var row = table.insertRow(0);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
-   
     var row = table.insertRow(0).innerHTML = '<tr>\
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change()')); ?></td>\
-    <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td>\
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>\
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','onchange'=>'change()')); ?></td>\
+    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]'));; ?></td>\
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->item_id, 'name'=>'units[]')); ?></td>\
     </tr>';
     }
+    function deleteRow(row)
+{
+  var i=row.parentNode.parentNode.rowIndex;
+    document.getElementById("recipeTable").deleteRow(i);  
+   }
+  
+    
     function change() 
 	{
 	//console.log("bbb");
@@ -92,4 +101,5 @@
 		
 	});	
 	}
-   </script>
+	
+	</script>

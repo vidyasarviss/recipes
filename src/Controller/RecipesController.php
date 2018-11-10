@@ -141,9 +141,9 @@ class RecipesController extends AppController
     {
         $data = $this->request->getData();
         $recipe = $this->Recipes->newEntity();
-       // $recipe = $this->Recipes->get($id, [
-           // 'contain' => ['ingredients']
-        // ]);
+        $recipe = $this->Recipes->get($id, [
+            'contain' => ['ingredients']
+         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
        
         //debug($data);die();
