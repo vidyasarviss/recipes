@@ -35,8 +35,9 @@
     ?>
     <tr>
     <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','onchange'=>'change()')); ?></td>
-    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]'));; ?></td>
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->item_id, 'name'=>'units[]')); ?></td>
+    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]','default'=>$ingredient->quantity)); ?></td>
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->unit_id, 'name'=>'units[]')); ?></td>
+    <td><input type="checkbox" value="check"></td>
     </tr>
     
     <?php
@@ -44,6 +45,7 @@
     ?>
     <input type="button" onclick="myFunction()" value="Add row" >
     <input type="button" id="delrtbutton" value="Delete row" onclick="deleteRow(this)"> 
+    
     </table>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
@@ -58,14 +60,17 @@
     var row = table.insertRow(0).innerHTML = '<tr>\
     <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','onchange'=>'change()')); ?></td>\
     <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]'));; ?></td>\
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->item_id, 'name'=>'units[]')); ?></td>\
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->unit_id, 'name'=>'units[]')); ?></td>\
+    <td><input type="checkbox" value="check"></td>\
     </tr>';
     }
+    
     function deleteRow(row)
-{
-  var i=row.parentNode.parentNode.rowIndex;
+	{
+  	var i=row.parentNode.parentNode.rowIndex;
     document.getElementById("recipeTable").deleteRow(i);  
-   }
+    
+   	}
   
     
     function change() 

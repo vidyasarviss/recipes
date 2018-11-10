@@ -155,12 +155,14 @@ class RecipesController extends AppController
                 $i = 0;                             
                 foreach($data['items'] as $item)
                 {                	
-                	$ingredient_id=$ing->find('list')->where(['item_id'=>$item,'recipe_id'=>$id])->first();
-                	$ingredient = $ing->get($ingredient_id);
-                	$ingredient->quantity=$data['qty'][$i];
-                	$ingredient->unit_id= $data['units'][$i];	
-                	$ing->save($ingredient); 
-                    $i++;          
+                	$ingredient=$ing->find('list')->where(['item_id'=>$item,'recipe_id'=>$id])->first();
+                	$ingredient=$ing->newEntity();
+                	$ingredient->recipe_id=$recipe->id;
+                	$ingredient->item_id= $item;
+                	$ingredient->quantity= $data['qty'][$i];
+                	$ingredient->unit_id= $data['units'][$i];
+                	$ing->save($ingredient);
+                	$i++;
                } 
               
                 $this->Flash->success(__('The recipe has been saved.'));
