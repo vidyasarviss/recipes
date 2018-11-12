@@ -249,4 +249,28 @@ class RecipesController extends AppController
     return $this->response;
     
   }
+  public function getitems()
+  {
+  $this->RequestHandler->respondAs('json');
+  $this->response->type('application/json');
+  $this->autoRender = false ;
+  $array=$this->request->data();
+  
+  $inid=$array;
+  $this->set('inid',$inid);
+  $ingredients_table = TableRegistry::get('Ingredients');
+  foreach($inid as $id)
+  {
+      $ingstatus = $ingredients_table->get($id);
+      $ingredients_table->delete($ingstatus);
+  
+  }
+  
+  $this->RequestHandler->renderAs($this,'json');
+  
+  $resultJ=json_encode($ingstatus);
+  $this->response->type('json');
+  $this->response->body($resultJ);
+  return $this->response;
+ }
 }

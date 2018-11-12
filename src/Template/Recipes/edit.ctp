@@ -34,17 +34,17 @@
     {
     ?>
     <tr>
+    <td><?php echo $this->Form->control('checkbox',array('type'=>'checkbox','name'=>'chk[]','id'=>$ingredient->id));?></td>
     <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','onchange'=>'change()')); ?></td>
     <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]','default'=>$ingredient->quantity)); ?></td>
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->unit_id, 'name'=>'units[]')); ?></td>
-    <td><input type="checkbox" value="check"></td>
     </tr>
     
     <?php
     }
     ?>
-    <input type="button" onclick="myFunction()" value="Add row" >
-    <input type="button" id="delrtbutton" value="Delete row" onclick="deleteRow(this)"> 
+    <input type="button" onclick="add_row()" value="Add row" >
+    <input type="button" id="delrtbutton" value="Delete row" onclick="check()"> 
     
     </table>
     <?= $this->Form->button(__('Submit')) ?>
@@ -52,23 +52,38 @@
 </div>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
  <script>
- 	function myFunction() {
+ 	function add_row() {
     var table = document.getElementById("recipeTable");
     var row = table.insertRow(0);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var row = table.insertRow(0).innerHTML = '<tr>\
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','onchange'=>'change()')); ?></td>\
-    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]'));; ?></td>\
-    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->unit_id, 'name'=>'units[]')); ?></td>\
-    <td><input type="checkbox" value="check"></td>\
+    <td><?php echo $this->Form->control('checkbox',array('type'=>'checkbox','name'=>'chk[]'));?></td>\
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change()')); ?></td>\
+    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]')); ?></td>\
+    <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'name'=>'units[]')); ?></td>\
     </tr>';
     }
     
     function deleteRow(row)
 	{
+	console.log(document.getElementsByName('chk'));
   	var i=row.parentNode.parentNode.rowIndex;
-    document.getElementById("recipeTable").deleteRow(i);  
+    document.getElementById("recipeTable").deleteRow(i);
+   
+            var rowCount = table.rows.length;
+
+            for(var i=0; i<rowCount; i++) {
+                var row = table.rows[i];
+                var chkbox = row.cells[0].childNodes[0];
+                if(null != chkbox && true == chkbox.checked) {
+                    table.deleteRow(i);
+                    rowCount--;
+                    i--;
+                }
+
+
+            }  
     
    	}
   
@@ -106,5 +121,44 @@
 		
 	});	
 	}
+	function check()
+	{
+	var ingredient_dlt=$('#ingredient-id');
+	var check_box=document.getElementsByName("chk[]");
 	
+	console.log(check_box);
+	var checkbox_id = new Array();
+	$("input[name='chk[]']:checked").each(function(){
+	if($(this).is(":checked")==true){
+	checkbox_id.push($(this).attr('id'));
+	}
+		console.log(checkbox_id);
+	});
+	
+	$.ajax({ 
+		type: 'POST',
+		async:true,
+		cache:false,
+		url: '/recipes/getitems',
+		  data: { 
+		    ingredientid:checkbox_id
+		  },
+		  dataType: 'json',
+		beforeSend: function(xhr) {
+			//xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			xhr.setRequestHeader('X-CSRF-Token',$('[name="_csrfToken"]').val());
+		},
+		success: function(response) {
+			if (response.error) {
+				alert(response.error);
+				console.log(response.error);
+				}
+				if(response){
+				location.reload();
+				
+				console.log(response);
+				}
+				}
+	});
+	}
 	</script>
