@@ -43,7 +43,7 @@
     <?php
     }
     ?>
-    <input type="button" onclick="add_row()" value="Add row" >
+    <input type="button" onclick="add_row()" value="Add Row" >
     <input type="button" id="delrtbutton" value="Delete row" onclick="check()"> 
     
     </table>
@@ -54,39 +54,15 @@
  <script>
  	function add_row() {
     var table = document.getElementById("recipeTable");
-    var row = table.insertRow(0);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var row = table.insertRow(0).innerHTML = '<tr>\
-    <td><?php echo $this->Form->control('checkbox',array('type'=>'checkbox','name'=>'chk[]'));?></td>\
-    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change()')); ?></td>\
+    var rowCount = $('#recipeTable tr').length;    
+    var row = table.insertRow().innerHTML = '<tr>\
+    <td><input type="checkbox" name="chk[]" id=chk'+(rowCount+1)+'></td>\
+    <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items,'name'=>'items[]','onchange'=>'change()')); ?></td>\
     <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]')); ?></td>\
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'name'=>'units[]')); ?></td>\
     </tr>';
     }
-    
-    function deleteRow(row)
-	{
-	console.log(document.getElementsByName('chk'));
-  	var i=row.parentNode.parentNode.rowIndex;
-    document.getElementById("recipeTable").deleteRow(i);
-   
-            var rowCount = table.rows.length;
-
-            for(var i=0; i<rowCount; i++) {
-                var row = table.rows[i];
-                var chkbox = row.cells[0].childNodes[0];
-                if(null != chkbox && true == chkbox.checked) {
-                    table.deleteRow(i);
-                    rowCount--;
-                    i--;
-                }
-
-
-            }  
-    
-   	}
-  
+ 
     
     function change() 
 	{
@@ -123,18 +99,27 @@
 	}
 	function check()
 	{
-	var ingredient_dlt=$('#ingredient-id');
-	var check_box=document.getElementsByName("chk[]");
-	
-	console.log(check_box);
-	var checkbox_id = new Array();
-	$("input[name='chk[]']:checked").each(function(){
-	if($(this).is(":checked")==true){
-	checkbox_id.push($(this).attr('id'));
-	}
-		console.log(checkbox_id);
+		var ingredient_dlt=$('#ingredient-id');
+		var check_box=document.getElementsByName("chk[]");
+		var checkbox_id = new Array();
+		$("input[name='chk[]']:checked").each(function(){
+			console.log($(this).attr('id'));		
+			if($(this).is(":checked")){
+				var chkid = $('#'+$(this).attr('id'));
+				var isnum = /^\d+$/.test($(this).attr('id'));				
+				if(!isnum)
+				{				
+					chkid.closest('tr').remove();
+				}
+				else{
+				   checkbox_id.push($(this).attr('id'));
+				}
+			}
 	});
 	
+	
+	if(checkbox_id.length > 0){
+	console.log(checkbox_id);
 	$.ajax({ 
 		type: 'POST',
 		async:true,
@@ -154,11 +139,14 @@
 				console.log(response.error);
 				}
 				if(response){
-				location.reload();
-				
-				console.log(response);
+				checkbox_id.forEach(function(entry){
+				console.log(entry);
+				var chkid = $('#'+entry);
+			    chkid.closest('tr').remove();
+				});
 				}
 				}
 	});
+	}
 	}
 	</script>

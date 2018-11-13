@@ -155,13 +155,20 @@ class RecipesController extends AppController
                 $i = 0;                             
                 foreach($data['items'] as $item)
                 {                	
-                	$ingredient=$ing->find('list')->where(['item_id'=>$item,'recipe_id'=>$id])->first();
-                	$ingredient=$ing->newEntity();
-                	$ingredient->recipe_id=$recipe->id;
-                	$ingredient->item_id= $item;
-                	$ingredient->quantity= $data['qty'][$i];
-                	$ingredient->unit_id= $data['units'][$i];
-                	$ing->save($ingredient);
+                	$ingredient = $ing->find('all')->where(['item_id'=>$item,'recipe_id'=>$id])->first();
+                	if($ingredient){
+                	    $ingredient->item_id= $item;
+                	    $ingredient->quantity= $data['qty'][$i];
+                	    $ingredient->unit_id= $data['units'][$i];
+                	    $ing->save($ingredient);
+                	}else{
+                    	$ingredient = $ing->newEntity();
+                    	$ingredient->recipe_id=$recipe->id;
+                    	$ingredient->item_id= $item;
+                    	$ingredient->quantity= $data['qty'][$i];
+                    	$ingredient->unit_id= $data['units'][$i];
+                    	$ing->save($ingredient);
+                	}
                 	$i++;
                } 
               
@@ -255,11 +262,11 @@ class RecipesController extends AppController
   $this->response->type('application/json');
   $this->autoRender = false ;
   $array=$this->request->data();
-  
+  //debug($array);die();
   $inid=$array;
   $this->set('inid',$inid);
   $ingredients_table = TableRegistry::get('Ingredients');
-  foreach($inid as $id)
+  foreach($inid['ingredientid'] as $id)
   {
       $ingstatus = $ingredients_table->get($id);
       $ingredients_table->delete($ingstatus);

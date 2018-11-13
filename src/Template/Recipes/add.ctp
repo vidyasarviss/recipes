@@ -30,21 +30,21 @@
     <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]')); ?></td>
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
     </tr>
-    <input type="button" onclick="myFunction()" value="Add row" > 
+     var <input type="button" onclick="myFunction()" value="Add row" > 
     
     
     </table>
     
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
-</div>
+    </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
   
     <script>
  	function myFunction() {
     var table = document.getElementById("recipeTable");
-    var row = table.insertRow(0);
+    var row = table.insertRow();
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
    
