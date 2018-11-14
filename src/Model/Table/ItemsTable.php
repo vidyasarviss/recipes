@@ -93,7 +93,7 @@ class ItemsTable extends Table
 public function beforeSave($event, $entity, $options)
 {
             $items_table = TableRegistry::get('Items'); 
-            $items=$items_table->find('list')->where(['item_name'=>$entity->item_name])->count();
+            $items=$items_table->find('all')->where(['item_name'=>$entity->item_name,'id !=' =>$entity->id])->count();
             if($items > 0)
             {
             return false;

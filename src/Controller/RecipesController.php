@@ -149,6 +149,7 @@ class RecipesController extends AppController
         //debug($data);die();
         //debug($this->request->getData();die();
             $recipe = $this->Recipes->patchEntity($recipe, $this->request->getData());
+            
             if ($this->Recipes->save($recipe)) {
             	$ing=TableRegistry::get('Ingredients');
                 $items=TableRegistry::get('Items'); 
@@ -176,6 +177,17 @@ class RecipesController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
+            $units = TableRegistry::get('Units');
+            $this->set('units',$units->find('list'));
+            
+            $recipes = TableRegistry::get('Recipes');
+            $this->set('recipes',$recipes->find('list'));
+            
+            $items = TableRegistry::get('Items');
+            $this->set('items',$items->find('list'));
+            
+            $category= TableRegistry::get('Categories');
+            $this->set('category',$category->find('list'));
             $this->Flash->error(__('The recipe could not be saved. Please, try again.'));
         }
         else if($this->request->is('get')){
