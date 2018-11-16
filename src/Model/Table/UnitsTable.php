@@ -1,10 +1,12 @@
 <?php
 namespace App\Model\Table;
 
+
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 
 /**
  * Units Model
@@ -62,4 +64,16 @@ class UnitsTable extends Table
 
         return $validator;
     }
+    public function beforeSave($event, $entity, $options)
+    {
+        //debug($entity);die();
+        $units_table = TableRegistry::get('Units');
+        $unit=$units_table->find('list')->where(['name'=>$entity->name])->count();
+        if($unit > 0)
+        {
+            return false;
+        }
+        
+    } 
+    
 }

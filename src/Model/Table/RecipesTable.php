@@ -40,7 +40,9 @@ class RecipesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Ingredients', [
-            'foreignKey' => 'recipe_id'
+            'foreignKey' => 'recipe_id',
+            'dependent'  => true,
+            'cascadeCallbacks' => true
         ]);
     }
 
@@ -80,7 +82,11 @@ public function beforeSave($event, $entity, $options)
 {
     //debug($entity);die();
             $recipes_table = TableRegistry::get('Recipes'); 
+            if(is_null($entity->id)){
+                $recipe=$recipes_table->find('list')->where(['recipes_name' =>$entity->recipes_name])->count();
+            }else{
             $recipe=$recipes_table->find('list')->where(['recipes_name'=>$entity->recipes_name,'id !=' =>$entity->id])->count();
+            }
             if($recipe > 0)
             {
             return false;

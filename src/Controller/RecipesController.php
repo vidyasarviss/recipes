@@ -124,9 +124,6 @@ class RecipesController extends AppController
             }
         }
        
-       
-       
-       
         $this->set(compact('recipe'));
     }
 
