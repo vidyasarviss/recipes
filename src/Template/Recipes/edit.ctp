@@ -28,7 +28,7 @@
             
         ?>
     </fieldset>
-        <table id="recipeTable">
+    <table id="recipeTable">
     <?php
     foreach($recipe->ingredients as $ingredient)
     {
@@ -57,7 +57,7 @@
         window.onload=change(item_select_box);
         
  	function add_row()
- 	 {
+ 	{
  	var units = <?php echo json_encode($units)?>;
 	var unit_options = "";
 	for(var k in units)

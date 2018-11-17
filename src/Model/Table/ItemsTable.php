@@ -40,7 +40,9 @@ class ItemsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Ingredients', [
-            'foreignKey' => 'item_id'
+            'foreignKey' => 'item_id',
+            'dependent'  => true,
+            'cascadeCallbacks' => true
         ]);
     }
 

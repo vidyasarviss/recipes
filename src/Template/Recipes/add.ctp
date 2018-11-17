@@ -39,22 +39,17 @@
     <?= $this->Form->end() ?>
     </div>
 
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
-  
-    <script>
-    
-     	var item_select_box=document.getElementById('item-id');
-        window.onload=change(item_select_box);
-        
- 	function add_row() {
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+<script>
+    var item_select_box=document.getElementById('item-id');
+    window.onload=change(item_select_box);
+    function add_row() {
  	var units = <?php echo json_encode($units)?>;
 	var unit_options = "";
 	for(var k in units)
 	{
 	unit_options+= "<option value=' "+ k +" '>" +units[k]+ "</option>";
 	}
-	
-	
 	var items = <?php echo json_encode($items) ?>;
 	var item_options = "";
 	for(var k in items)
@@ -62,14 +57,13 @@
 	item_options+= "<option value=' "+ k +" '>" +items[k]+ "</option>";
 	}
 	
-	
     var table = document.getElementById("recipeTable");
     var no_of_rows=$('#recipeTable tr').length;
     
     var row = table.insertRow().innerHTML = '<tr>\
     <td><select name="items[]" onchange="change(this)" id=item-id'+(no_of_rows)+'>'+item_options+'</select></td>\
     <td><?php echo $this->Form->control(' ', array('name'=>'qty[]')); ?></td>\
-    <td><select name="units[]" id=unit-id'+(no_of_rows)+'>'+unit_options+'</select></td>\
+    <td><select name="units[]" id=unit-id'+(no_of_rows)'+unit_options+'</select></td>\
     </tr>';
     }
     
