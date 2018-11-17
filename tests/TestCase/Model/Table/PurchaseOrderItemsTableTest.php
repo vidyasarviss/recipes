@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\PurchaseOrderTable;
+use App\Model\Table\PurchaseOrderItemsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\PurchaseOrderTable Test Case
+ * App\Model\Table\PurchaseOrderItemsTable Test Case
  */
-class PurchaseOrderTableTest extends TestCase
+class PurchaseOrderItemsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\PurchaseOrderTable
+     * @var \App\Model\Table\PurchaseOrderItemsTable
      */
-    public $PurchaseOrder;
+    public $PurchaseOrderItems;
 
     /**
      * Fixtures
@@ -24,7 +24,7 @@ class PurchaseOrderTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.purchase_order',
+        'app.purchase_order_items',
         'app.items'
     ];
 
@@ -36,8 +36,8 @@ class PurchaseOrderTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('PurchaseOrder') ? [] : ['className' => PurchaseOrderTable::class];
-        $this->PurchaseOrder = TableRegistry::getTableLocator()->get('PurchaseOrder', $config);
+        $config = TableRegistry::getTableLocator()->exists('PurchaseOrderItems') ? [] : ['className' => PurchaseOrderItemsTable::class];
+        $this->PurchaseOrderItems = TableRegistry::getTableLocator()->get('PurchaseOrderItems', $config);
     }
 
     /**
@@ -47,7 +47,7 @@ class PurchaseOrderTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->PurchaseOrder);
+        unset($this->PurchaseOrderItems);
 
         parent::tearDown();
     }
@@ -68,6 +68,16 @@ class PurchaseOrderTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

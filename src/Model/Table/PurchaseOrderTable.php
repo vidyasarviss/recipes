@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * PurchaseOrder Model
  *
- * @property \App\Model\Table\ItemsTable|\Cake\ORM\Association\BelongsTo $Items
+ * @property \App\Model\Table\ItemsTable|\Cake\ORM\Association\BelongsToMany $Items
  *
  * @method \App\Model\Entity\PurchaseOrder get($primaryKey, $options = [])
  * @method \App\Model\Entity\PurchaseOrder newEntity($data = null, array $options = [])
@@ -34,14 +34,13 @@ class PurchaseOrderTable extends Table
         parent::initialize($config);
 
         $this->setTable('purchase_order');
-        $this->setDisplayField('id');
+        $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Items', [
-            'foreignKey' => 'item_id',
-            'joinType' => 'INNER',
-            'dependent'  => true,
-            'cascadeCallbacks' => true
+        $this->belongsToMany('Items', [
+            'foreignKey' => 'purchase_order_id',
+            'targetForeignKey' => 'item_id',
+            'joinTable' => 'purchase_order_items'
         ]);
     }
 
@@ -58,44 +57,15 @@ class PurchaseOrderTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->integer('units')
-            ->requirePresence('units', 'create')
-            ->notEmpty('units');
+            ->scalar('supplier')
+            ->maxLength('supplier', 255)
+            ->requirePresence('supplier', 'create')
+            ->notEmpty('supplier');
 
         $validator
-            ->integer('quantity')
-            ->requirePresence('quantity', 'create')
-            ->notEmpty('quantity');
-
-        $validator
-            ->integer('rate')
-            ->requirePresence('rate', 'create')
-            ->notEmpty('rate');
-
-        $validator
-            ->integer('warehouses')
-            ->requirePresence('warehouses', 'create')
-            ->notEmpty('warehouses');
-
-        $validator
-            ->integer('amount')
-            ->requirePresence('amount', 'create')
-            ->notEmpty('amount');
+            ->date('required_date')
+            ->allowEmpty('required_date');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['item_id'], 'Items'));
-
-        return $rules;
     }
 }

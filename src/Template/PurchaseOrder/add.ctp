@@ -17,12 +17,9 @@
     <fieldset>
         <legend><?= __('Add Purchase Order') ?></legend>
         <?php
-            echo $this->Form->control('item_id', ['options' => $items]);
-            echo $this->Form->control('units');
-            echo $this->Form->control('quantity');
-            echo $this->Form->control('rate');
-            echo $this->Form->control('warehouses');
-            echo $this->Form->control('amount');
+            echo $this->Form->control('supplier');
+            echo $this->Form->control('required_date', ['empty' => true]);
+            echo $this->Form->control('items_id', ['options' => $items]);
         ?>
     </fieldset>
     

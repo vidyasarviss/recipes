@@ -38,7 +38,8 @@ class WarehousesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('StockTransactions', [
-            'foreignKey' => 'warehouse_id'
+            'foreignKey' => 'warehouse_id',
+            
         ]);
     }
 

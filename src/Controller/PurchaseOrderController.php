@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\ORM\TableRegistry;
+
 /**
  * PurchaseOrder Controller
  *
@@ -20,9 +20,6 @@ class PurchaseOrderController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Items']
-        ];
         $purchaseOrder = $this->paginate($this->PurchaseOrder);
 
         $this->set(compact('purchaseOrder'));
@@ -59,19 +56,7 @@ class PurchaseOrderController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Units = TableRegistry::get('Units');
-            $this->set('units',$this->Units->find('list'));
-            
-            $this->Warehouses = TableRegistry::get('Warehouses');
-            $this->set('warehouses',$this->Warehouses->find('list'));
-            
             $this->Flash->error(__('The purchase order could not be saved. Please, try again.'));
-        }else if($this->request->is('get')){
-            $this->Units = TableRegistry::get('Units');
-            $this->set('units',$this->Units->find('list'));
-            
-            $this->Warehouses = TableRegistry::get('Warehouses');
-            $this->set('warehouses',$this->Warehouses->find('list'));
         }
         $items = $this->PurchaseOrder->Items->find('list', ['limit' => 200]);
         $this->set(compact('purchaseOrder', 'items'));
@@ -87,7 +72,7 @@ class PurchaseOrderController extends AppController
     public function edit($id = null)
     {
         $purchaseOrder = $this->PurchaseOrder->get($id, [
-            'contain' => []
+            'contain' => ['Items']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $purchaseOrder = $this->PurchaseOrder->patchEntity($purchaseOrder, $this->request->getData());

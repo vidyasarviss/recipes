@@ -18,12 +18,8 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('item_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('units') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('quantity') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('rate') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('warehouses') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('amount') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('supplier') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('required_date') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -31,12 +27,8 @@
             <?php foreach ($purchaseOrder as $purchaseOrder): ?>
             <tr>
                 <td><?= $this->Number->format($purchaseOrder->id) ?></td>
-                <td><?= $purchaseOrder->has('item') ? $this->Html->link($purchaseOrder->item->item_name, ['controller' => 'Items', 'action' => 'view', $purchaseOrder->item->id]) : '' ?></td>
-                <td><?= $this->Number->format($purchaseOrder->units) ?></td>
-                <td><?= $this->Number->format($purchaseOrder->quantity) ?></td>
-                <td><?= $this->Number->format($purchaseOrder->rate) ?></td>
-                <td><?= $this->Number->format($purchaseOrder->warehouses) ?></td>
-                <td><?= $this->Number->format($purchaseOrder->amount) ?></td>
+                <td><?= h($purchaseOrder->supplier) ?></td>
+                <td><?= h($purchaseOrder->required_date) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $purchaseOrder->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $purchaseOrder->id]) ?>
