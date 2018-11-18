@@ -115,7 +115,7 @@ DROP TABLE IF EXISTS `purchase_order_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `purchase_order_items` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `item_id` int(11) NOT NULL,
   `unit_id` int(11) NOT NULL,
   `purchase_order_id` int(11) NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE `purchase_order_items` (
   CONSTRAINT `purchase_order_items_ibfk_2` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`),
   CONSTRAINT `purchase_order_items_ibfk_3` FOREIGN KEY (`purchase_order_id`) REFERENCES `purchase_orders` (`id`),
   CONSTRAINT `purchase_order_items_ibfk_4` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,6 +141,7 @@ CREATE TABLE `purchase_order_items` (
 
 LOCK TABLES `purchase_order_items` WRITE;
 /*!40000 ALTER TABLE `purchase_order_items` DISABLE KEYS */;
+INSERT INTO `purchase_order_items` VALUES (1,2,1,65,56757,5,2,6);
 /*!40000 ALTER TABLE `purchase_order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +161,7 @@ CREATE TABLE `purchase_orders` (
   PRIMARY KEY (`id`),
   KEY `fk_purchase_orders_1_idx` (`supplier_id`),
   CONSTRAINT `fk_purchase_orders_1` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,7 +170,7 @@ CREATE TABLE `purchase_orders` (
 
 LOCK TABLES `purchase_orders` WRITE;
 /*!40000 ALTER TABLE `purchase_orders` DISABLE KEYS */;
-INSERT INTO `purchase_orders` VALUES (7,2,'2018-11-18','2018-02-05',2),(8,2,'2018-11-18','2018-11-18',NULL),(12,1,'2018-11-18','2018-11-18',NULL),(16,1,'2018-11-18','2018-11-18',NULL),(17,1,'2020-02-02','2018-11-18',NULL),(18,2,'2018-11-18','2018-11-18',NULL),(19,2,'2018-11-18','2018-11-18',NULL),(20,2,'2018-11-18','2018-11-18',NULL),(21,2,'2018-11-18','2018-11-18',NULL),(22,1,'2018-11-18','2018-11-18',NULL),(23,1,'2018-11-18','2018-11-18',NULL),(24,1,'2018-11-18','2018-11-18',NULL),(25,1,'2018-11-18','2018-11-18',NULL),(26,1,'2018-11-18','2018-11-18',NULL),(27,1,'2018-11-18','2018-11-18',NULL),(28,1,'2018-11-18','2018-11-18',NULL),(29,1,'2018-11-18','2018-11-18',NULL),(30,1,'2018-11-18','2018-11-18',NULL),(31,1,'2018-11-18','2018-11-18',NULL),(32,1,'2018-11-18','2018-11-18',NULL),(33,1,'2018-11-18','2018-11-18',NULL),(34,1,'2018-11-18','2018-11-18',NULL),(35,1,'2018-11-18','2018-11-18',NULL),(36,1,'2018-11-18','2018-11-18',NULL),(37,1,'2018-11-18','2018-11-18',NULL),(38,1,'2018-11-18','2018-11-18',NULL),(39,1,'2018-11-18','2018-11-18',NULL),(40,1,'2018-11-18','2018-11-18',NULL),(41,1,'2018-11-18','2018-11-18',NULL),(42,1,'2018-11-18','2018-11-18',NULL),(43,2,'2018-11-18','2018-11-18',NULL),(44,2,'2018-11-18','2018-11-18',NULL),(45,2,'2018-11-18','2018-11-18',NULL),(46,2,'2018-11-18','2018-11-18',NULL),(47,2,'2018-11-18','2018-11-18',NULL),(48,2,'2018-11-18','2018-11-18',NULL),(49,2,'2018-11-18','2018-11-18',NULL),(50,2,'2018-11-18','2018-11-18',NULL),(51,2,'2018-11-18','2018-11-18',NULL),(52,2,'2018-11-18','2018-11-18',NULL),(53,2,'2018-11-18','2018-11-18',NULL);
+INSERT INTO `purchase_orders` VALUES (65,2,'2018-11-18','2018-11-18',NULL);
 /*!40000 ALTER TABLE `purchase_orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,4 +311,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-18 15:23:56
+-- Dump completed on 2018-11-18 15:34:10
