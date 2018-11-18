@@ -7,9 +7,10 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * PurchaseOrder Model
+ * PurchaseOrders Model
  *
- * @property \App\Model\Table\ItemsTable|\Cake\ORM\Association\BelongsToMany $Items
+ * @property \App\Model\Table\SuppliersTable|\Cake\ORM\Association\BelongsTo $Suppliers
+ * @property \App\Model\Table\PurchaseOrderItemsTable|\Cake\ORM\Association\HasMany $PurchaseOrderItems
  *
  * @method \App\Model\Entity\PurchaseOrder get($primaryKey, $options = [])
  * @method \App\Model\Entity\PurchaseOrder newEntity($data = null, array $options = [])
@@ -20,7 +21,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\PurchaseOrder[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\PurchaseOrder findOrCreate($search, callable $callback = null, $options = [])
  */
-class PurchaseOrderTable extends Table
+class PurchaseOrdersTable extends Table
 {
 
     /**
@@ -33,14 +34,15 @@ class PurchaseOrderTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('purchase_order');
-        $this->setDisplayField('name');
+        $this->setTable('purchase_orders');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsToMany('Items', [
-            'foreignKey' => 'purchase_order_id',
-            'targetForeignKey' => 'item_id',
-            'joinTable' => 'purchase_order_items'
+        $this->belongsTo('Suppliers', [
+            'foreignKey' => 'supplier_id'
+        ]);
+        $this->hasMany('PurchaseOrderItems', [
+            'foreignKey' => 'purchase_order_id'
         ]);
     }
 
@@ -57,15 +59,33 @@ class PurchaseOrderTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('supplier')
-            ->maxLength('supplier', 255)
-            ->requirePresence('supplier', 'create')
-            ->notEmpty('supplier');
+            ->date('transaction_date')
+            ->requirePresence('transaction_date', 'create')
+            ->notEmpty('transaction_date');
 
         $validator
             ->date('required_date')
-            ->allowEmpty('required_date');
+            ->requirePresence('required_date', 'create')
+            ->notEmpty('required_date');
+
+        $validator
+            ->integer('type')
+            ->allowEmpty('type');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['supplier_id'], 'Suppliers'));
+
+        return $rules;
     }
 }

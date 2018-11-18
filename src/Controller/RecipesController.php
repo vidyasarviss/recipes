@@ -24,9 +24,6 @@ class RecipesController extends AppController
     public function index()
     {
         $recipes = $this->paginate($this->Recipes);
-        
-        
-        
         $this->set(compact('recipes'));
     }
 
@@ -82,9 +79,10 @@ class RecipesController extends AppController
                     $ingredient->item_id= $item;
 	                $ingredient->quantity= $data['qty'][$i];
 	                $ingredient->unit_id= $data['units'][$i];	 
-	                $ing->save($ingredient);           	                        	
+	                $ing->save($ingredient);   
+	                $i++;
+	                        	                        	
 	         	}	              	                  
-	            $i++;
 			            
                 $this->Flash->success(__('The recipe has been saved.'));
 
