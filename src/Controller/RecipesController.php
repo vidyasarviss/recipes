@@ -23,7 +23,13 @@ class RecipesController extends AppController
      */
     public function index()
     {
+        
         $recipes = $this->paginate($this->Recipes);
+        $this->paginate['order']=['id'=>'DESC'];
+       // $this->set(compact('recipes'));
+        
+        //$this->set('recipes', $this->paginate($this->Recipes));
+        $this->set('_serialize', ['recipes']);
         $this->set(compact('recipes'));
     }
 
@@ -202,9 +208,9 @@ class RecipesController extends AppController
             $this->set('ingredients',$ingredients->find('list'));
             foreach ($items as $item)
             {
-                $item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+              $item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
                 
-            }
+           }
         }
         $this->set(compact('recipe'));
     }

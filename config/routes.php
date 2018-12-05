@@ -44,9 +44,23 @@ use Cake\Routing\Route\DashedRoute;
  * constructor in your `src/Application.php` file to change this behavior.
  *
  */
+
+
 Router::defaultRouteClass(DashedRoute::class);
 
+Router::prefix('api', function (RouteBuilder $routes) {
+    $routes->extensions(['json', 'xml']);
+    
+    $routes->resources('Recipes');
+    $routes->resources('PurchaseOrders');
+    
+});
+    
+
+
 Router::scope('/', function (RouteBuilder $routes) {
+    $routes->extensions(['json']);
+    
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
@@ -75,5 +89,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+   // Router::extensions(['json']);
     $routes->fallbacks(DashedRoute::class);
 });
+    

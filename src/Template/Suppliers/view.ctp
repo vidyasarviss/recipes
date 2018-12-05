@@ -36,7 +36,7 @@
                 
                 <th scope="col"><?= __('Transaction Date') ?></th>
                 <th scope="col"><?= __('Required Date') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                
             </tr>
             <?php foreach ($supplier->purchase_orders as $purchaseOrders): ?>
             <tr>
@@ -44,10 +44,7 @@
                
                 <td><?= h($purchaseOrders->transaction_date) ?></td>
                 <td><?= h($purchaseOrders->required_date) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'PurchaseOrders', 'action' => 'view', $purchaseOrders->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'PurchaseOrders', 'action' => 'edit', $purchaseOrders->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'PurchaseOrders', 'action' => 'delete', $purchaseOrders->id], ['confirm' => __('Are you sure you want to delete # {0}?', $purchaseOrders->id)]) ?>
+                
                 </td>
             </tr>
             <?php endforeach; ?>

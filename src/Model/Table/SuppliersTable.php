@@ -40,7 +40,9 @@ class SuppliersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('PurchaseOrders', [
-            'foreignKey' => 'supplier_id'
+            'foreignKey' => 'supplier_id',
+             'dependent'  => true,
+            'cascadeCallbacks' => true
         ]);
     }
 
