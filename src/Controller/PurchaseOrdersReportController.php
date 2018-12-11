@@ -56,6 +56,7 @@ class PurchaseOrdersReportController extends AppController
       }
         $this->set('def_date', $def_date);
         $this->set('pos', $pos);
+        $this->set('_serialize', ['pos']);
         //$this->set('pois', $pois);
         
     }

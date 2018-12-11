@@ -55,8 +55,6 @@ Router::prefix('api', function (RouteBuilder $routes) {
     $routes->resources('PurchaseOrders');
     
 });
-    
-
 
 Router::scope('/', function (RouteBuilder $routes) {
     $routes->extensions(['json']);
