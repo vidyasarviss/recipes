@@ -94,7 +94,7 @@ class PurchaseOrdersReportController extends AppController
         foreach($pos as $po)
         {
             $item=$items_table->get($item_array[$po->item_id]);
-            //debug($item);die();
+            debug($item);die();
             
             if($po->unit_id == $item_array->purchase_unit)
             {
@@ -102,9 +102,7 @@ class PurchaseOrdersReportController extends AppController
                 //debug($po->quantity);die();
             }
         }
-        
-  
-        
+       
         $this->response->header('Access-Control-Allow-Origin', '*');
         $this->set('def_date', $def_date);
         //$this->set('pos', $pos);

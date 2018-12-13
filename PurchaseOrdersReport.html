@@ -1,0 +1,192 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+<script src="moment.js"></script>
+<script>
+
+
+
+var app = angular.module("MyApp", []);
+app.controller("PostsCtrl", function($scope, $http) {
+
+  var pendingTask;
+  var item;
+  var warehouseslocations;
+  var warehouse;
+  var items;
+  var from_date;
+  var to_date;
+  var units;
+var unit;
+
+  if ($scope.search === undefined) {
+    $scope.search = "";
+     getData();
+  }
+
+$scope.warehousechange = function()
+	{
+	if(typeof $scope.item === "undefined"){
+	$scope.item=null;
+	}
+
+	if(typeof $scope.from_date==="undefined"){
+	$scope.from_date=null;
+	}
+
+	if(typeof $scope.to_date==="undefined"){
+	$scope.to_date=null;
+	}
+	console.log("vbvb");
+	getData();
+	};
+
+
+$scope.itemchange = function()
+	{
+	if(typeof $scope.warehouse ==="undefined"){
+	$scope.warehouse=null;
+	}
+
+	if(typeof $scope.from_date ==="undefined"){
+	$scope.from_date = null;
+	}
+
+	if(typeof $scope.to_date==="undefined"){
+	$scope.to_date=null;
+	}
+	console.log("oioio");
+	getData();
+	};
+
+
+$scope.transactiondatechange = function()
+	{
+	if(typeof $scope.warehouse==="undefined"){
+	$scope.warehouse=null;
+	}
+
+	if(typeof $scope.item==="undefined"){
+	$scope.item=null;
+	}
+
+	if(typeof $scope.to_date==="undefined"){
+	$scope.to_date=null;
+	}
+	console.log("Tdate");
+	getData();
+	};
+
+$scope.requireddatechange = function()
+	{
+	if(typeof $scope.warehouse==="undefined"){
+	$scope.warehouse=null;
+	}
+
+	if(typeof $scope.item==="undefined"){
+	$scope.item=null;
+	}
+
+	if(typeof $scope.from_date==="undefined"){
+	$scope.from_date=null;
+	}
+	console.log("rdate");
+	getData();
+	};
+
+
+
+function getData() {
+    var url = "http://localhost:8765/purchase-ordersReport/.json";
+    var config = {
+	params:{
+       "warehouse_id":$scope.warehouse,
+       "item_id":$scope.item,
+       //"transaction_date":$scope.from_date,
+       //"required_date":$scope.to_date
+        "transaction_date":moment($scope.from_date).format('YYYY-MM-DD'),
+        "required_date":moment($scope.to_date).format('YYYY-MM-DD')
+    }
+  }
+console.log(config);
+    $http.get(url,config).
+    success(function(data, status, headers, config) {
+
+ $scope.purchase_orders=data.results.pos;
+
+ $scope.warehouseslocations=data.results.warehouses;
+
+ $scope.items=data.results.items;
+      
+    }).
+    error(function(data, status, headers, config) {
+      //log error
+    });
+  }
+});
+
+
+</script>
+<body ng-app="MyApp">
+
+
+    <div class="container" ng-controller="PostsCtrl">
+        <div class="page-header">
+             <h1>Purchase Order Report</h1>
+        </div>
+<div class="form-group">
+<div class="col-md-12 text-center">
+<table class="table">
+<thead>
+<tr>
+   <th>From date</th>
+   <th>To date</th>
+   <th>Warehouse</th>
+   <th>Item</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><input type="date" ng-model="from_date" ng-change="transactiondatechange()"></input></td>
+<td><input type="date" ng-model="to_date" ng-change="requireddatechange()"></input></td>
+<td><select ng-model="warehouse" ng-options="key as value for (key,value) in warehouseslocations"  ng-change="warehousechange()"></select></td>
+<td><select ng-model="item" ng-options="key as value for (key,value) in items" ng-change="itemchange()"></select></td>
+</tr>
+</div>
+</table>
+
+<div class="col-md-12 text-center">
+<table class="table">
+<thead>
+<tr>
+  <th>Id</th>
+  <th>Transaction date</th>
+  <th>Required date</th>
+  <th>Warehouse</th>
+  <th>Item</th>
+  <th>Quantity</th>
+  <th>Rate</th>
+  <th>Unit</th>
+</tr>
+</thead>
+
+<tbody>
+<tr ng-repeat="purchase_order in purchase_orders">
+<td>{{purchase_order.po.id}}</td>
+<td>{{purchase_order.po.transaction_date}}</td>
+<td>{{purchase_order.po.required_date}}</td>
+<td>{{purchase_order.warehouse.name}}</td>
+<td>{{purchase_order.item.item_name}}</td>
+<td>{{purchase_order.quantity}}</td>
+<td>{{purchase_order.rate}}</td>
+<td>{{purchase_order.unit.name}}</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</body>
