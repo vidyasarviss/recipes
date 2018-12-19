@@ -41,8 +41,8 @@ class UnitsTable extends Table
 
         $this->hasMany('Ingredients', [
             'foreignKey' => 'unit_id',
-            'dependent'  => true,
-            'cascadeCallbacks' => true
+            //'dependent'  => true,
+           // 'cascadeCallbacks' => true
         ]);
     }
 

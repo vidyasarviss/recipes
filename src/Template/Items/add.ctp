@@ -19,9 +19,9 @@
         <?php
             echo $this->Form->control('item_name');
 	        echo $this->Form->input('purchase_unit',array('type'=>'select','options'=>$units));
-	        echo $this->Form->input('sell_unit_qty');
+	        echo $this->Form->input('sell_unit_qty',array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001'));
 	        echo $this->Form->input('sell_unit',array('type'=>'select','options'=>$units));
-	        echo $this->Form->input('usage_unit_qty');	        
+	        echo $this->Form->input('usage_unit_qty',array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001'));	        
 	        echo $this->Form->input('usage_unit',array('type'=>'select','options'=>$units));
 	       
 	        

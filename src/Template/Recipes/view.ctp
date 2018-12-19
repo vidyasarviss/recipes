@@ -31,9 +31,12 @@
             <td><?= $this->Number->format($recipe->id) ?></td>
         </tr>
     </table>
-    <div class="row">
+    
+    <div style='width:1300px; word-wrap:break-word;'>
         <h4><?= __('Preparation Method') ?></h4>
-        <?= $this->Text->autoParagraph(h($recipe->preparation_method)); ?>
+        
+         <?= $this->Text->autoParagraph(h($recipe->preparation_method)); ?>
+       
     </div>
     <div class="related">
         <h4><?= __('Related Ingredients') ?></h4>

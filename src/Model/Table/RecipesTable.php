@@ -38,7 +38,9 @@ class RecipesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Ingredients', [
-            'foreignKey' => 'recipe_id'
+            'foreignKey' => 'recipe_id',
+            'dependent'  => true,
+            'cascadeCallbacks' => true
         ]);
     }
 

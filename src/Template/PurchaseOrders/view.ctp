@@ -14,8 +14,7 @@
         <li><?= $this->Html->link(__('New Purchase Order'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Suppliers'), ['controller' => 'Suppliers', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Supplier'), ['controller' => 'Suppliers', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Purchase Order Items'), ['controller' => 'PurchaseOrderItems', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Purchase Order Item'), ['controller' => 'PurchaseOrderItems', 'action' => 'add']) ?> </li>
+        
     </ul>
 </nav>
 <div class="purchaseOrders view large-9 medium-8 columns content">
@@ -86,7 +85,7 @@
  <script>
  
  	function do_onload()
- 	{
+ 	{   
         var poCount = $('#viewTable tr').length;
         console.log('afasfasf111111 ', poCount);        
         for(var i=1; i<poCount;i++){
@@ -94,7 +93,8 @@
             var qty = $('#quantity_id'+i).text();
 			var rate = $('#rate_id'+i).text();
 			var amount = parseFloat(qty) * parseFloat(rate);
-			$('#amount_id'+i).text(amount);
+			var amt=amount.toPrecision(3);
+			$('#amount_id'+i).text(amt);
             console.log(amount,qty,rate);            
 		}
 	}

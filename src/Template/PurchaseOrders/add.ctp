@@ -10,12 +10,12 @@
         <li><?= $this->Html->link(__('List Purchase Orders'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Suppliers'), ['controller' => 'Suppliers', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Supplier'), ['controller' => 'Suppliers', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Purchase Order Items'), ['controller' => 'PurchaseOrderItems', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Purchase Order Item'), ['controller' => 'PurchaseOrderItems', 'action' => 'add']) ?></li>
+        
     </ul>
 </nav>
 <div class="purchaseOrders form large-9 medium-8 columns content">
-    <?= $this->Form->create($purchaseOrder) ?>
+    <?= $this->Form->create($purchaseOrder,array('id'=>'myForm')) ?>
+    
     <fieldset>
         <legend><?= __('Add Purchase Order') ?></legend>
         <?php
@@ -24,24 +24,25 @@
             //echo $this->Form->control('transaction_date');
             //echo $this->Form->control('required_date');
         ?>
-        Transaction date <input type="date" id="t_date" name="transaction_date">
-        Required date    <input type="date" id="r_date" name="required_date" onchange="dateComp()">
+        Transaction date <input type="date" id="t_date" name="transaction_date" value= "<?php echo $def_date;?>">
+        Required date    <input type="date" id="r_date" name="required_date"  value= "<?php echo $def_date;?>">
     </fieldset>
-    
+          
     <table id="purchase_ordersTable">
     	<tr>
     		<td><?php echo $this->Form->control('checkbox',array('type'=>'checkbox','name'=>'chk[]','id'=>'chk[]'));?></td>
     		<td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change(this)'));?></td>
     		<td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
-    		<td><?php echo $this->Form->control('quantity', array('type'=>'number','name'=>'qty[]','required'=>'true','onchange'=>'calculate_amount(this)')); ?></td>
-    		<td><?php echo $this->Form->control('rate',array('type'=>'number','name'=>'rate[]','required'=>'true','onchange'=>'calculate_amount(this)')); ?></td>
+    		<td><?php echo $this->Form->control('quantity', array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001','name'=>'qty[]','required'=>'true','onchange'=>'calculate_amount(this)')); ?></td>
+    		<td><?php echo $this->Form->control('rate',array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001','name'=>'rate[]','required'=>'true','onchange'=>'calculate_amount(this)')); ?></td>
     		<td><span id=amount></span></td>
     		<td><?php echo $this->Form->control('warehouse_id',array('type'=>'select','options'=>$warehouses, 'name'=>'warehouses[]')); ?></td>
     	</tr>
     		<input type="button" onclick="add_row()" value="Add row" > 
     		<input type="button" id="delrtbutton" value="Delete row" onclick="delcheck()"> 
     </table>
-    <?= $this->Form->button(__('Submit')) ?>
+   <button type="submit" value="submit" onclick="dateComp()"> Submit </button>
+     
     <?= $this->Form->end() ?>
 </div>
 <script src="/js/jquery-3.3.1.min.js"></script>
@@ -70,8 +71,8 @@
     <td><input type="checkbox" name="chk[]" id=chk'+(rowCount+1)+'></td>\
     <td><select name="items[]" onchange="change(this)" id=item-id'+(no_of_rows)+'>'+item_options+'</select></td>\
     <td><select name="units[]" id=unit-id'+(no_of_rows)+'>'+unit_options+'</select></td>\
-    <td><input type="number" name="qty[]" id=quantity-id'+(no_of_rows)+' onchange="calculate_amount(this)"></td>\
-    <td><input type="number" name="rate[]" id=rate-id'+(no_of_rows)+' onchange="calculate_amount(this)"></td>\
+    <td><input type="number" min="0.1000", max="99999999.99", step="0.001", name="qty[]" id=quantity-id'+(no_of_rows)+' onchange="calculate_amount(this)"></td>\
+    <td><input type="number" min="0.1000", max="99999999.99", step="0.001", name="rate[]" id=rate-id'+(no_of_rows)+' onchange="calculate_amount(this)"></td>\
     <td><span id=amount'+(no_of_rows)+'></span></td>\
     <td><?php echo $this->Form->control('',array('type'=>'select','options'=>$warehouses, 'name'=>'warehouses[]')); ?></td>\
     </tr>';
@@ -225,13 +226,13 @@ function dateComp()
    var date1 = $('#t_date').val();
    var date2 = $('#r_date').val();
    
-  	if(date1 >= date2)
+  	if(date2 <= date1)
   		{
-  		alert('transaction date cannot be greater then required date')
-    	}else{
-    	alert('valid date')
-    	}
-
+  		alert('Invalid date,transaction date cannot be greater then required date')
+  		return false;
+ 
+        }
+    document.getElementById('myForm').submit();
   }
-  
+ 
 	</script>

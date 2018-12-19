@@ -84,7 +84,7 @@ class PurchaseOrdersReportController extends AppController
         }
         
         $item_array=array();
-        
+        //debug($item_array);die();
         foreach($pos as $po)
         {
            $item_array[$po->item_id]=0;
@@ -93,14 +93,28 @@ class PurchaseOrdersReportController extends AppController
         
         foreach($pos as $po)
         {
-            $item=$items_table->get($item_array[$po->item_id]);
-            debug($item);die();
+//             if($po->type == 2)
+//             {
+//                 $item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
+//                 $po->balance=$item_array[$po->item_id];
+               
+                
+                 $po_item=$items_table->get($po->item_id);
+                 // debug($item);die();
             
-            if($po->unit_id == $item_array->purchase_unit)
-            {
-                $po->quantity = $po->quantity * $item_array->sel_unit_qty;
-                //debug($po->quantity);die();
-            }
+                 if($po->unit_id == $po_item->purchase_unit)
+                     {
+                         $po->quantity = $po->quantity * $po_item->sel_unit_qty;
+                           //debug($po->quantity);die();
+                     }
+           // }
+        
+            //else{
+                    //$item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
+                   // $po->balance=$item_array[$po->item_id];
+                  //  debug($po->balance);die();
+                //}  
+        
         }
        
         $this->response->header('Access-Control-Allow-Origin', '*');
@@ -111,6 +125,7 @@ class PurchaseOrdersReportController extends AppController
         $results["warehouses"]=$warehouse;
         $results["items"]=$item;
         $results["units"]=$unit;
+        
         $this->set('results', $results);
         $this->set('_serialize', ['results']);
         //$this->set('pois', $pois);

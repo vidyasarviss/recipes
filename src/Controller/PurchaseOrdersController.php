@@ -29,6 +29,7 @@ class PurchaseOrdersController extends AppController
         $purchaseOrders = $this->paginate($this->PurchaseOrders);
 
         $this->set(compact('purchaseOrders'));
+        
     }
 
     /**
@@ -67,7 +68,7 @@ class PurchaseOrdersController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {
+    {   $def_date = date("Y-m-d");
         $data = $this->request->getData();
         $purchaseOrder = $this->PurchaseOrders->newEntity();
         if ($this->request->is('post')) {
@@ -136,6 +137,7 @@ class PurchaseOrdersController extends AppController
             }
         $suppliers = $this->PurchaseOrders->Suppliers->find('list', ['limit' => 200]);
         $this->set(compact('purchaseOrder', 'suppliers'));
+        $this->set('def_date', $def_date);
     }
 
     /**
@@ -293,7 +295,7 @@ class PurchaseOrdersController extends AppController
     $item = $items_table ->get($itemid['itemid']);
     $units_table = TableRegistry::get('Units');
    
-    $units=$units_table->find('list')->where(['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+    $units=$units_table->find('list')->where(['id IN '=>[$item->purchase_unit,$item->sell_unit]]);
     
     $this->RequestHandler->renderAs($this, 'json');
 

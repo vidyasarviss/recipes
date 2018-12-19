@@ -123,7 +123,8 @@ class RecipesController extends AppController
             $this->set('category',$category->find('list'));
             foreach ($items as $item)
             {
-                $item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+                //$item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+                $item->units=$units->find('list',['id IN '=>[$item->usage_unit]]);
                 
             }
         }
@@ -208,7 +209,8 @@ class RecipesController extends AppController
             $this->set('ingredients',$ingredients->find('list'));
             foreach ($items as $item)
             {
-              $item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+              //$item->units=$units->find('list',['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+              $item->units=$units->find('list',['id IN '=>[$item->usage_unit]]);
                 
            }
         }
@@ -255,7 +257,8 @@ class RecipesController extends AppController
     //}
     // print_r($units);
    
-    $units=$units_table->find('list')->where(['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+    //$units=$units_table->find('list')->where(['id IN '=>[$item->purchase_unit,$item->sell_unit,$item->usage_unit]]);
+    $units=$units_table->find('list')->where(['id IN '=>[$item->usage_unit]]);
     //debug($item->purchase_unit,$item->sell_unit,$item->usage_unit); die();
     //this gives template error, google "cakephp function response without template"
     

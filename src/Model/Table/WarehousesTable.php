@@ -41,7 +41,7 @@ class WarehousesTable extends Table
 
         $this->hasMany('StockTransactions', [
             'foreignKey' => 'warehouse_id',
-              'dependent'  => true,
+             'dependent'  => true,
             'cascadeCallbacks' => true
         ]);
     }
