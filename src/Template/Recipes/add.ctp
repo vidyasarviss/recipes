@@ -28,7 +28,7 @@
     <tr>
      <td><?php echo $this->Form->control('checkbox',array('type'=>'checkbox','name'=>'chk[]','id'=>'chk[]'));?></td>
     <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'name'=>'items[]','onchange'=>'change(this)')); ?></td>
-    <td><?php echo $this->Form->control('quantity', array('name'=>'qty[]','required'=>'true')); ?></td>
+    <td><?php echo $this->Form->control('quantity', array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001','name'=>'qty[]','required'=>'true')); ?></td>
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units, 'name'=>'units[]')); ?></td>
     </tr>
      <input type="button" onclick="add_row()" value="Add row" > 
@@ -65,7 +65,7 @@
     var row = table.insertRow().innerHTML = '<tr>\
     <td><input type="checkbox" name="chk[]" id=chk'+(rowCount+1)+'></td>\
     <td><select name="items[]" onchange="change(this)" id=item-id'+(no_of_rows)+'>'+item_options+'</select></td>\
-    <td><?php echo $this->Form->control(' ', array('name'=>'qty[]')); ?></td>\
+    <td><?php echo $this->Form->control(' ', array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001','name'=>'qty[]')); ?></td>\
     <td><select name="units[]" id=unit-id'+(no_of_rows)+'>'+unit_options+'</select></td>\
     </tr>';
    // var item_select_box = document.getElementById('item-id'+no_of_rows);

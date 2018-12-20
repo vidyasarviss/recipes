@@ -51,12 +51,7 @@ class PurchaseOrdersReportController extends AppController
             if(isset($data['item_id']) && !is_null($data['item_id']))
             {
                array_push($conditions,array('item_id'=>$data['item_id']));
-            }
-            
-            if(isset($data['unit_id']) && !is_null($data['unit_id']))
-            {
-                array_push($conditions,array('unit_id'=>$data['unit_id']));
-            }
+            }            
             
            if(isset($data['warehouse_id']) && !is_null($data['warehouse_id']))
             {
@@ -66,12 +61,7 @@ class PurchaseOrdersReportController extends AppController
             if(isset($data['transaction_date']) && !is_null($data['transaction_date']))
             {
                 array_push($conditions,array('transaction_date >=' =>$data['transaction_date']));
-            }
-            
-            if(isset($data['required_date']) && !is_null($data['required_date']))
-            {
-                array_push($conditions,array('required_date <=' =>$data['required_date']));
-            }
+            }           
           
             if(!empty($conditions))
                {
@@ -88,38 +78,35 @@ class PurchaseOrdersReportController extends AppController
         foreach($pos as $po)
         {
            $item_array[$po->item_id]=0;
-           //debug($item_array);die();
+           //debug($item_array);die(); 
         }
         
         foreach($pos as $po)
         {
-//             if($po->type == 2)
-//             {
-//                 $item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
-//                 $po->balance=$item_array[$po->item_id];
-               
-                
                  $po_item=$items_table->get($po->item_id);
-                 // debug($item);die();
+                   //debug($$po_item);die();
             
                  if($po->unit_id == $po_item->purchase_unit)
-                     {
-                         $po->quantity = $po->quantity * $po_item->sel_unit_qty;
-                           //debug($po->quantity);die();
-                     }
-           // }
-        
-            //else{
-                    //$item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
-                   // $po->balance=$item_array[$po->item_id];
-                  //  debug($po->balance);die();
-                //}  
-        
+                 {   
+                     //debug($po->unit_id);die();
+                     //debug($po_item->purchase_unit);die();
+                 
+                   $po->quantity = $po->quantity * $po_item->sell_unit_qty;
+                   $item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
+                   $po->balance=$item_array[$po->item_id];
+                   //debug($po_item->sell_unit_qty);die();
+                 }else{
+                     $po->quantity = $po->quantity;
+                     $item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
+                     $po->balance=$item_array[$po->item_id];
+                 }
+           
         }
+ 
        
         $this->response->header('Access-Control-Allow-Origin', '*');
         $this->set('def_date', $def_date);
-        //$this->set('pos', $pos);
+        $this->set('pos', $pos);
         $results=array();
         $results["pos"]=$pos;
         $results["warehouses"]=$warehouse;
@@ -129,6 +116,7 @@ class PurchaseOrdersReportController extends AppController
         $this->set('results', $results);
         $this->set('_serialize', ['results']);
         //$this->set('pois', $pois);
+        
         
     }
     

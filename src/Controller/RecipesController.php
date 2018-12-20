@@ -228,11 +228,20 @@ class RecipesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $recipe = $this->Recipes->get($id);
-        if ($this->Recipes->delete($recipe)) {
-            $this->Flash->success(__('The recipe has been deleted.'));
-        } else {
-            $this->Flash->error(__('The recipe could not be deleted. Please, try again.'));
+        try {
+            $this->Recipes->delete($recipe);
         }
+        catch (\PDOException $e) {
+            $error = 'The item you are trying to delete is associated with other records';
+            // The exact error message is $e->getMessage();
+            $this->set('error', $e);
+            $this->Flash->error(__('The item you are trying to delete is associated with other records.'));
+        }
+//         if ($this->Recipes->delete($recipe)) {
+//             $this->Flash->success(__('The recipe has been deleted.'));
+//         } else {
+//             $this->Flash->error(__('The recipe could not be deleted. Please, try again.'));
+//         }
 
         return $this->redirect(['action' => 'index']);
     }

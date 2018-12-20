@@ -97,11 +97,20 @@ class WarehousesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $warehouse = $this->Warehouses->get($id);
-        if ($this->Warehouses->delete($warehouse)) {
-            $this->Flash->success(__('The warehouse has been deleted.'));
-        } else {
-            $this->Flash->error(__('The warehouse could not be deleted. Please, try again.'));
+        try {
+            $this->Warehouses->delete($warehouse);
         }
+        catch (\PDOException $e) {
+            $error = 'The item you are trying to delete is associated with other records';
+            // The exact error message is $e->getMessage();
+            $this->set('error', $e);
+            $this->Flash->error(__('The item you are trying to delete is associated with other records.'));
+        }
+//         if ($this->Warehouses->delete($warehouse)) {
+//             $this->Flash->success(__('The warehouse has been deleted.'));
+//         } else {
+//             $this->Flash->error(__('The warehouse could not be deleted. Please, try again.'));
+//         }
 
         return $this->redirect(['action' => 'index']);
     }

@@ -24,7 +24,7 @@
     </ul>
 </nav>
 <div class="purchaseOrders form large-9 medium-8 columns content">
-    <?= $this->Form->create($purchaseOrder) ?>
+    <?= $this->Form->create($purchaseOrder,array('id'=>'myForm')) ?>
     <fieldset>
         <legend><?= __('Edit Purchase Order') ?></legend>
         <?php
@@ -35,7 +35,7 @@
             
         ?>
         transaction_date <input type="date" id="t_date" name="transaction_date" value="<?php echo date ("Y-m-d",strtotime($purchaseOrder->transaction_date))?>">
-        required_date    <input type="date" id="r_date" name="required_date" value="<?php echo date("Y-m-d", strtotime($purchaseOrder->required_date))?>" onchange="dateComp()">
+        required_date    <input type="date" id="r_date" name="required_date" value="<?php echo date("Y-m-d", strtotime($purchaseOrder->required_date))?>" >
         
         
     </fieldset>
@@ -71,7 +71,7 @@
     
     
     </table>
-    <button type="submit" id="smtbutton" value="submit"> Submit </button>
+    <input id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="dateComp();"/>
     <?= $this->Form->end() ?>
    
 </div>
@@ -127,7 +127,7 @@
     <td></td>\
     <td><select name="units[]" id=unit_id'+(no_of_rows+1)+'>'+unit_options+'</select></td>\
     <td><input type="number"  min="0.100", max="99999999.99", step="0.001", name="qty[]" id=quantity_id'+(no_of_rows+1)+' onchange="calculate_amount(this)"></td>\
-    <td><input type="number"  min="0.100", max="99999999.99", step="0.001",name="rate[]" id=rate_id'+(no_of_rows+1)+' onchange="calculate_amount(this)"></td>\
+    <td><input type="number"  min="0.100", max="99999999.99", step="0.001", name="rate[]" id=rate_id'+(no_of_rows+1)+' onchange="calculate_amount(this)"></td>\
     <td><span id=amount'+(no_of_rows+1)+'></span></td>\
     <td><select name="warehouses[]" id=warehouse_id'+(no_of_rows+1)+'>'+warehouse_options+'</select></td>\
     </tr>';
@@ -301,13 +301,12 @@ function change(id)
    var date1 = $('#t_date').val();
    var date2 = $('#r_date').val();
    
-  	if(date1 >= date2)
+  if(date2 <= date1)
   		{
-  		alert('Transaction date cannot be greater then required date')
-    	}else{
-    	alert('Entered date is valid')
-    	}
-
+  		window.alert('Invalid date,transaction date cannot be greater then required date');
+  		return false;
+        }
+    document.getElementById("myForm").submit();
   }
  // <div class="message success error-message" onclick="this.classList.add('hidden')">The purchase order has been saved.</div>
 

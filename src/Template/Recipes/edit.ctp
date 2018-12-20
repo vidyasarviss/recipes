@@ -41,7 +41,7 @@
     <td><?php echo $this->Form->control('checkbox',array('type'=>'checkbox','name'=>'chk[]','id'=>$ingredient->id));?></td>
     <td><?php echo $this->Form->control('item_id',array('type'=>'select','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','id'=>$itemid,'onchange'=>'change(this)','disabled'=>'true')); ?></td>
     <td><?php echo $this->Form->control('item_id',array('type'=>'hidden','options'=>$items, 'default'=>$ingredient->item_id, 'name'=>'items[]','id'=>$itemid,'onchange'=>'change(this)')); ?></td>
-    <td><?php echo $this->Form->control('quantity',  array('name'=>'qty[]','default'=>$ingredient->quantity,'id'=>$quantity)); ?></td>
+    <td><?php echo $this->Form->control('quantity',  array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001','name'=>'qty[]','default'=>$ingredient->quantity,'id'=>$quantity)); ?></td>
     <td><?php echo $this->Form->control('unit_id',array('type'=>'select','options'=>$units,'default'=>$ingredient->unit_id, 'name'=>'units[]','id'=>$unitid)); ?></td>
     </tr>
     
@@ -100,7 +100,7 @@
     <td><input type="checkbox" name="chk[]" id=chk'+(rowCount+1)+'></td>\
     <td><select name="items[]" onchange="change(this.id)" id=item_id'+(no_of_rows+1)+'>'+item_options+'</select></td>\
     <td></td>\
-    <td><input type="number" name="qty[]" id=quantity_id'+(no_of_rows+1)+'></td>\
+    <td><input type="number", min="0.1000", max="9999999999.99", step="0.001", name="qty[]" id=quantity_id'+(no_of_rows+1)+'></td>\
     <td><select name="units[]" id=unit_id'+(no_of_rows+1)+'>'+unit_options+'</select></td>\
     </tr>';
     var item_select_box = document.getElementById('item_id'+(no_of_rows+1));

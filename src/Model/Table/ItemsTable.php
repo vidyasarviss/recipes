@@ -41,8 +41,8 @@ class ItemsTable extends Table
 
         $this->hasMany('Ingredients', [
             'foreignKey' => 'item_id',
-            'dependent'  => true,
-            'cascadeCallbacks' => true
+            //'dependent'  => true,
+            //'cascadeCallbacks' => true
         ]);
     }
 

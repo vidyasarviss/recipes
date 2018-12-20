@@ -40,8 +40,9 @@
     	</tr>
     		<input type="button" onclick="add_row()" value="Add row" > 
     		<input type="button" id="delrtbutton" value="Delete row" onclick="delcheck()"> 
-    </table>
-   <button type="submit" value="submit" onclick="dateComp()"> Submit </button>
+   </table>
+   
+   <input id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="dateComp();"/>
      
     <?= $this->Form->end() ?>
 </div>
@@ -228,11 +229,10 @@ function dateComp()
    
   	if(date2 <= date1)
   		{
-  		alert('Invalid date,transaction date cannot be greater then required date')
+  		window.alert('Invalid date,transaction date cannot be greater then required date');
   		return false;
- 
         }
-    document.getElementById('myForm').submit();
+    document.getElementById("myForm").submit();
   }
  
 	</script>

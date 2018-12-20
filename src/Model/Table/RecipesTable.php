@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 
 /**
  * Recipes Model
@@ -39,8 +40,8 @@ class RecipesTable extends Table
 
         $this->hasMany('Ingredients', [
             'foreignKey' => 'recipe_id',
-            'dependent'  => true,
-            'cascadeCallbacks' => true
+            //'dependent'  => true,
+            //'cascadeCallbacks' => true
         ]);
     }
 
@@ -75,4 +76,19 @@ class RecipesTable extends Table
 
         return $validator;
     }
+    public function beforeSave($event, $entity, $options)
+    {
+        //debug($entity);die();
+        $recipes_table = TableRegistry::get('Recipes');
+        if(is_null($entity->id)){
+            $recipes=$recipes_table->find('all')->where(['recipes_name'=>$entity->recipes_name])->count();
+        }else{
+            $recipes=$recipes_table->find('all')->where(['recipes_name'=>$entity->recipes_name,'id !=' =>$entity->id])->count();
+        }
+        if($recipes > 0)
+        {
+            return false;
+        }
+    }
+    
 }

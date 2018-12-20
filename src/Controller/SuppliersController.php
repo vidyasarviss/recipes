@@ -96,11 +96,20 @@ class SuppliersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $supplier = $this->Suppliers->get($id);
-        if ($this->Suppliers->delete($supplier)) {
-            $this->Flash->success(__('The supplier has been deleted.'));
-        } else {
-            $this->Flash->error(__('The supplier could not be deleted. Please, try again.'));
+        try {
+            $this->Suppliers->delete($supplier);
+        } catch (\PDOException $e) {
+            $error = 'The item you are trying to delete is associated with other records';
+            // The exact error message is $e->getMessage();
+            $this->set('error', $e);
+            $this->Flash->error(__('The item you are trying to delete is associated with other records.'));
+        
         }
+//         if ($this->Suppliers->delete($supplier)) {
+//             $this->Flash->success(__('The supplier has been deleted.'));
+//         } else {
+//             $this->Flash->error(__('The supplier could not be deleted. Please, try again.'));
+//         }
 
         return $this->redirect(['action' => 'index']);
     }
