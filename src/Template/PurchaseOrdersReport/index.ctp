@@ -55,8 +55,11 @@ console.log("hfjkj",required_date);
  var item=document.getElementById("item");
  var item_selected_value = item.options[item.selectedIndex].value;
  console.log("ttt");
+ 
+var pourl=window.location.origin;
 
-window.location.assign("http://localhost:8765/purchase-ordersReport?warehouse_id="+selected_value+"&item_id="+item_selected_value+"&transaction_date="+transaction_date+"&required_date="+required_date);
+window.location.assign(pourl+"/purchase-ordersReport?warehouse_id="+selected_value+"&item_id="+item_selected_value+"&transaction_date="+transaction_date+"&required_date="+required_date);
+
 }
 
 

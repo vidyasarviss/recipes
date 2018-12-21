@@ -73,33 +73,35 @@ class PurchaseOrdersReportController extends AppController
               //debug($pos->first());die();
         }
         
+        
         $item_array=array();
         //debug($item_array);die();
         foreach($pos as $po)
         {
-           $item_array[$po->item_id]=0;
+            $item_array[$po->item_id.$po->warehouse_id]=0;
            //debug($item_array);die(); 
         }
         
         foreach($pos as $po)
         {
-                 $po_item=$items_table->get($po->item_id);
-                   //debug($$po_item);die();
+            $po_item=$items_table->get($po->item_id);
+           //$warehouse=$warehouse_table->get($po->warehouse_id);
+           // debug($po->warehouse_id);die();
             
                  if($po->unit_id == $po_item->purchase_unit)
                  {   
-                     //debug($po->unit_id);die();
-                     //debug($po_item->purchase_unit);die();
-                 
+                     
                    $po->quantity = $po->quantity * $po_item->sell_unit_qty;
-                   $item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
-                   $po->balance=$item_array[$po->item_id];
-                   //debug($po_item->sell_unit_qty);die();
+                   $item_array[$po->item_id.$po->warehouse_id] = $item_array[$po->item_id.$po->warehouse_id] + $po->quantity;
+                      //debug( $item_array[$po->item_id.$po->warehouse_id]);die();
+                   $po->balance=$item_array[$po->item_id.$po->warehouse_id];
+                      // debug($po->warehouse_id);die();
+                      
                  }else{
                      $po->quantity = $po->quantity;
-                     $item_array[$po->item_id] = $item_array[$po->item_id] + $po->quantity;
-                     $po->balance=$item_array[$po->item_id];
-                 }
+                     $item_array[$po->item_id.$po->warehouse_id] = $item_array[$po->item_id.$po->warehouse_id] + $po->quantity;
+                     $po->balance=$item_array[$po->item_id.$po->warehouse_id];
+                      }
            
         }
  

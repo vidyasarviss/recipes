@@ -81,11 +81,7 @@ function validate()
 	        return false ;
 			}    
 			document.getElementById("myForm").submit();
-			
-	 
+		
    }
-	
-	
-	
 	
 </script>

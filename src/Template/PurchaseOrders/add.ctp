@@ -42,7 +42,7 @@
     		<input type="button" id="delrtbutton" value="Delete row" onclick="delcheck()"> 
    </table>
    
-   <input id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="dateComp();"/>
+   <button id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="dateComp();">Submit </button>
      
     <?= $this->Form->end() ?>
 </div>
