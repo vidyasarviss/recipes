@@ -19,16 +19,16 @@
         <?php
             echo $this->Form->control('item_name');
 	        echo $this->Form->input('purchase_unit',array('type'=>'select','options'=>$units));
-	        echo $this->Form->input('sell_unit_qty',array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001'));
+	        echo $this->Form->input('sell_unit_qty',array('min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001','value'=>'1'));
 	        echo $this->Form->input('sell_unit',array('type'=>'select','options'=>$units));
-	        echo $this->Form->input('usage_unit_qty',array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001'));	        
+	        echo $this->Form->input('usage_unit_qty',array('min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001','value'=>'1'));	        
 	        echo $this->Form->input('usage_unit',array('type'=>'select','options'=>$units));
 	       
-	        
 	       ?>
     </fieldset>
     <?php ?>
-    <input id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="validate();"/>
+    
+    <button id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="validate();">Submit </button>
     
    
 </div>
@@ -36,10 +36,23 @@
  <script>
  
 function validate()
-	{
+	{   var sell_unit_qty=document.getElementById("sell-unit-qty");
+	    var usage_unit_qty=document.getElementById("usage-unit-qty");
 		var pu= document.getElementById("purchase-unit");
 		var su= document.getElementById("sell-unit");
 		var usg_u= document.getElementById("usage-unit");
+		
+		if(sell_unit_qty.value == "" || sell_unit_qty.value == 0)
+			{
+			window.alert("Sell unit quantity should be greater then or equal to one");
+	        return false ;
+	        }
+	        
+	     if(usage_unit_qty == "" || usage_unit_qty.value == 0)
+			{
+			window.alert("usage unit quantity should be greater then or equal to one");
+	        return false ;
+	        }
 		
 		if (pu.value == usg_u.value)
 			{

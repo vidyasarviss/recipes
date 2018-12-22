@@ -45,7 +45,8 @@ class PurchaseOrdersReportController extends AppController
                 'conditions' => 'PurchaseOrderItems.purchase_order_id = po.id'
             ]])->contain(['Items', 'Units', 'Warehouses']);
           // debug($pos->first());die();
-        if(!empty($data))
+          
+           
         {
             $conditions = array();
             if(isset($data['item_id']) && !is_null($data['item_id']))
@@ -72,6 +73,16 @@ class PurchaseOrdersReportController extends AppController
                 // ]])->contain(['Items', 'Units', 'Warehouses'])->where($conditions);
               //debug($pos->first());die();
         }
+        if(empty($data))
+        {
+            
+            $data['transaction_date']=$def_date;
+            $data['required_date']=$def_date;
+            $data['warehouse_id']="";
+            $data['item_id']="";
+            
+        }
+        $this->set('data',$data);
         
         
         $item_array=array();
@@ -102,10 +113,8 @@ class PurchaseOrdersReportController extends AppController
                      $item_array[$po->item_id.$po->warehouse_id] = $item_array[$po->item_id.$po->warehouse_id] + $po->quantity;
                      $po->balance=$item_array[$po->item_id.$po->warehouse_id];
                       }
-           
         }
- 
-       
+        
         $this->response->header('Access-Control-Allow-Origin', '*');
         $this->set('def_date', $def_date);
         $this->set('pos', $pos);

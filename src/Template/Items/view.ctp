@@ -28,40 +28,16 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Purchase Unit') ?></th>
-            <td><?= $this->Number->format($item->purchase_unit) ?></td>
+            <td><?= $item->pu_name ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Sell Unit') ?></th>
-            <td><?= $this->Number->format($item->sell_unit) ?></td>
+            <td> <?=$item->su_name ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Usage Unit') ?></th>
-            <td><?= $this->Number->format($item->usage_unit) ?></td>
+            <td> <?=$item->uu_name ?></td>
         </tr>
     </table>
-    <div class="related">
-        <h4><?= __('Related Ingredients') ?></h4>
-        <?php if (!empty($item->ingredients)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Item Id') ?></th>
-                <th scope="col"><?= __('Quantity') ?></th>
-               
-                <th scope="col"><?= __('Unit Id') ?></th>
-           </tr>
-            <?php foreach ($item->ingredients as $ingredients): ?>
-            <tr>
-                <td><?= h($ingredients->id) ?></td>
-                <td><?= h($ingredients->item_name) ?></td>
-                <td><?= h($ingredients->quantity) ?></td>
-                
-                <td><?= h($ingredients->unit_name) ?></td>
-               
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
+   
 </div>

@@ -40,8 +40,8 @@ class RecipesTable extends Table
 
         $this->hasMany('Ingredients', [
             'foreignKey' => 'recipe_id',
-            //'dependent'  => true,
-            //'cascadeCallbacks' => true
+            'dependent'  => true,
+            'cascadeCallbacks' => true
         ]);
     }
 

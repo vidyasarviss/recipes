@@ -35,6 +35,8 @@
 			'empty' => true
 		    ]
 	    );
+	   echo $this->Form->input('sell_unit_qty',array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001'));
+	    
           echo $this->Form->input(
 		    'sell_unit', 
 		    [
@@ -44,7 +46,7 @@
 			'empty' => true
 		    ]
 	    );
-	    
+	    echo $this->Form->input('usage_unit_qty',array('type'=>'number','min'=>'0.1000','max'=>'9999999999.99','step'=>'0.001'));	    
 	    echo $this->Form->input(
 		    'usage_unit', 
 		    [
@@ -57,18 +59,30 @@
         ?>
     </fieldset>
      <?php ?>
-    <input id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="validate();"/>
-    
+   <button id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="validate();">Submit </button>
    
 </div>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
  <script>
  
 function validate()
-	{
+	{   var sell_unit_qty=document.getElementById("sell-unit-qty");
+	    var usage_unit_qty=document.getElementById("usage-unit-qty");
 		var pu= document.getElementById("purchase-unit");
 		var su= document.getElementById("sell-unit");
 		var usg_u= document.getElementById("usage-unit");
+		
+		if(sell_unit_qty.value == "" || sell_unit_qty.value == 0)
+			{
+			window.alert("Sell unit quantity should be greater then or equal to one");
+	        return false ;
+	        }
+	        
+	     if(usage_unit_qty == "" || usage_unit_qty.value == 0)
+			{
+			window.alert("usage unit quantity should be greater then or equal to one");
+	        return false ;
+	        }
 		
 		if (pu.value == usg_u.value)
 			{

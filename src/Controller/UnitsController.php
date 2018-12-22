@@ -54,6 +54,10 @@ class UnitsController extends AppController
 	    	$units= TableRegistry::get('Units');      
 	    	$ingredient->unit_id=$unit->id;
 	    	$ingredient->unit_name=$units->get($ingredient->unit_id)->name;
+	    	
+	    	$units= TableRegistry::get('Units');
+	    	$ingredient->unit_id=$unit->id;
+	    	$ingredient->unit_name=$units->get($ingredient->unit_id)->name;
 	   	}
 
         $this->set('unit', $unit);
@@ -75,7 +79,7 @@ class UnitsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
             
-            $this->Flash->error(__('The unit could not be saved. Please, try again.'));
+            $this->Flash->error(__('Same unit could not be saved. Please, try again.'));
         }
         $this->set(compact('unit'));
     }
@@ -122,7 +126,7 @@ class UnitsController extends AppController
             $error = 'The item you are trying to delete is associated with other records';
             // The exact error message is $e->getMessage();
             $this->set('error', $e);
-            $this->Flash->error(__('The item you are trying to delete is associated with other records.'));
+            $this->Flash->error(__('The unit you are trying to delete is associated with other records.'));
         }
 //         if ($this->Units->delete($unit)) {
 //             $this->Flash->success(__('The unit has been deleted.'));

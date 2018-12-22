@@ -42,7 +42,7 @@
     		<input type="button" id="delrtbutton" value="Delete row" onclick="delcheck()"> 
    </table>
    
-   <button id="btnsubmit" name="btnsubmit" type="button" value="Submit" onclick="dateComp();">Submit </button>
+   <button id="btnsubmit" name="btnsubmit" type="button" value="Submit"   onclick="validation()" >Submit </button>
      
     <?= $this->Form->end() ?>
 </div>
@@ -221,18 +221,35 @@ function calculate_amount(element)
            }
   }
 
-function dateComp()
+function validation()
   {
+   var quantity=document.getElementById("quantity");
+   var rate=document.getElementById("rate");
    
    var date1 = $('#t_date').val();
    var date2 = $('#r_date').val();
-   
+   console.log("oooo");
   	if(date2 <= date1)
-  		{
+  	{
   		window.alert('Invalid date,transaction date cannot be greater then required date');
   		return false;
-        }
-    document.getElementById("myForm").submit();
+    }
+        
+    console.log("quantity.val");
+    if(quantity.val == "" )
+		{
+		window.alert("quantity  should not be empty");
+	       return false ;
+	        }
+	if(rate.val == "")
+			{
+			window.alert(" rate should not be empty");
+	        return false ;
+	        }
+	
+     document.getElementById("myForm").submit();
+ 
   }
+  
  
 	</script>

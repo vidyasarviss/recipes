@@ -108,7 +108,7 @@ class RecipesController extends AppController
             $category= TableRegistry::get('Categories');
             $this->set('category',$category->find('list'));
             
-            $this->Flash->error(__('The recipe could not be saved. Please, try again.'));
+            $this->Flash->error(__('Same recipe could not be saved. Please, try again.'));
         }else if($this->request->is('get')){
             $units = TableRegistry::get('Units');
             $this->set('units',$units->find('list'));
@@ -235,7 +235,7 @@ class RecipesController extends AppController
             $error = 'The item you are trying to delete is associated with other records';
             // The exact error message is $e->getMessage();
             $this->set('error', $e);
-            $this->Flash->error(__('The item you are trying to delete is associated with other records.'));
+            $this->Flash->error(__('The recipe you are trying to delete is associated with other records.'));
         }
 //         if ($this->Recipes->delete($recipe)) {
 //             $this->Flash->success(__('The recipe has been deleted.'));

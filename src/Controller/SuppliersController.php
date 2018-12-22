@@ -56,7 +56,7 @@ class SuppliersController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The supplier could not be saved. Please, try again.'));
+            $this->Flash->error(__('Same supplier could not be saved. Please, try again.'));
         }
         $this->set(compact('supplier'));
     }
@@ -102,7 +102,7 @@ class SuppliersController extends AppController
             $error = 'The item you are trying to delete is associated with other records';
             // The exact error message is $e->getMessage();
             $this->set('error', $e);
-            $this->Flash->error(__('The item you are trying to delete is associated with other records.'));
+            $this->Flash->error(__('The supplier you are trying to delete is associated with other records.'));
         
         }
 //         if ($this->Suppliers->delete($supplier)) {
