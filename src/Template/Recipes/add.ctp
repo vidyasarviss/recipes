@@ -11,7 +11,7 @@
     </ul>
 </nav>
 <div class="recipes form large-9 medium-8 columns content">
-    <?= $this->Form->create($recipe) ?>
+    <?= $this->Form->create($recipe ,array('id'=>'myForm')) ?>
     <fieldset>
         <legend><?= __('Add Recipe') ?></legend>
         <?php
@@ -36,9 +36,8 @@
     
     
     </table>
+    <button id="btnsubmit" name="btnsubmit" type="button" value="Submit"   onclick="validate()" >Submit </button>
     
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
     </div>
 
 <script src="/js/jquery-3.3.1.min.js"></script>
@@ -204,5 +203,19 @@
 	//console.log(chkid);
 	}
 	}
-
+function validate()
+{
+ var quantity=document.getElementById("quantity");
+ var rate=document.getElementById("rate");
+    if(quantity.value == "")
+		{
+			window.alert("quantity  should not be empty");
+	        return false ;
+	    }
+	
+	
+     document.getElementById("myForm").submit();
+ 
+  
+}
 	</script>

@@ -51,7 +51,7 @@
     var item_select_box=document.getElementById('item-id');
     window.onload=change(item_select_box);
     
-    function add_row() {
+    function add_row() {<button id="btnsubmit" name="btnsubmit" type="button" value="Submit"   onclick="validation()" >Submit </button>
     var units = <?php echo json_encode($units)?>;
 	var unit_options = "";
 	for(var k in units)
@@ -235,13 +235,13 @@ function validation()
   		return false;
     }
         
-    console.log("quantity.val");
-    if(quantity.val == "" )
+    
+    if(quantity.value == "")
 		{
 		window.alert("quantity  should not be empty");
 	       return false ;
 	        }
-	if(rate.val == "")
+	if(rate.value == "")
 			{
 			window.alert(" rate should not be empty");
 	        return false ;

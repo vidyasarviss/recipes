@@ -346,6 +346,8 @@ class PurchaseOrdersController extends AppController
   $this->response->body($resultJ);
   return $this->response;
  }
+ 
+ 
  public function generatepdf()
  {
      $this->RequestHandler->respondAs('json');

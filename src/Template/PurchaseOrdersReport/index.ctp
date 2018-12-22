@@ -4,10 +4,10 @@
     <h3><?= __('Purchase Orders Report') ?></h3>
 <table>
       <tr>
-    		<td>From date <input type=date id="t_date" name="transaction_date" value= "<?php echo $data['transaction_date'];?>" ></td>
-    		<td>To date <input type=date id="r_date"  name="required_date" value= "<?php echo $data['required_date'];?>" > </td>
-    		<td><?php echo $this->Form->control('Warehouse', array('type'=>'select','name'=>'warehouses[]','default'=> $data['warehouse_id'] )); ?></td>
-    		<td><?php echo $this->Form->control('Item',array('type'=>'select','name'=>'items[]','default'=> $data['item_id'])); ?></td>
+    		<td>From date <input type=date id="t_date" name="transaction_date" value= "<?php echo $results["data"]['transaction_date'];?>" ></td>
+    		<td>To date <input type=date id="r_date"  name="required_date" value= "<?php echo $results["data"]['required_date'];?>" > </td>
+    		<td><?php echo $this->Form->control('Warehouse', array('type'=>'select','name'=>'warehouses[]','default'=> $results["data"]['warehouse_id'] )); ?></td>
+    		<td><?php echo $this->Form->control('Item',array('type'=>'select','name'=>'items[]','default'=> $results["data"]['item_id'])); ?></td>
     		<td><button type="submit" value="submit" onclick="check_submit()"> Submit </button></td>
     	</tr>
 </table>

@@ -297,17 +297,20 @@ function change(id)
   	
   function dateComp()
   {
+   var quantity=document.getElementById("quantity");
+   var rate=document.getElementById("rate");
    
    var date1 = $('#t_date').val();
    var date2 = $('#r_date').val();
    
   if(date2 <= date1)
-  		{
-  		window.alert('Invalid date,transaction date cannot be greater then required date');
-  		return false;
-        }
+   {
+  	 window.alert('Invalid date,transaction date cannot be greater then required date');
+  	 return false;
+   }
+  
     document.getElementById("myForm").submit();
   }
- // <div class="message success error-message" onclick="this.classList.add('hidden')">The purchase order has been saved.</div>
+
 
 	</script>

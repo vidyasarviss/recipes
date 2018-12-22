@@ -18,7 +18,8 @@ class PurchaseOrdersReportController extends AppController
         $po_table=TableRegistry::get('Purchase_orders');
         $poi_table=TableRegistry::get('PurchaseOrderItems');
 
-        $def_date = date("Y-m-d");
+        $def_date = date("Y-m-01");
+        $def_date1 = date("Y-m-t");
         //debug($def_date);die();
         $items_table = TableRegistry::get('Items');
         $item=$items_table->find('list');
@@ -77,12 +78,12 @@ class PurchaseOrdersReportController extends AppController
         {
             
             $data['transaction_date']=$def_date;
-            $data['required_date']=$def_date;
+            $data['required_date']=$def_date1;
             $data['warehouse_id']="";
             $data['item_id']="";
             
         }
-        $this->set('data',$data);
+        //$this->set('data',$data);
         
         
         $item_array=array();
@@ -114,11 +115,14 @@ class PurchaseOrdersReportController extends AppController
                      $po->balance=$item_array[$po->item_id.$po->warehouse_id];
                       }
         }
-        
+         
         $this->response->header('Access-Control-Allow-Origin', '*');
         $this->set('def_date', $def_date);
+        $this->set('def_date1', $def_date1);
         $this->set('pos', $pos);
+        
         $results=array();
+        $results["data"]=$data;
         $results["pos"]=$pos;
         $results["warehouses"]=$warehouse;
         $results["items"]=$item;
